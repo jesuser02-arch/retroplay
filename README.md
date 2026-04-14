@@ -1,2 +1,2 @@
 # retroplay
-mulador web retro — NES, SNES, GBA, PSP y más
+emulador web retro — NES, SNES, GBA, PSP y más
