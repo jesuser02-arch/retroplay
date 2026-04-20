@@ -13,6 +13,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RetroPlay — Emulador Web</title>
+  <meta name="description" content="Emulador web retro — NES, SNES, GBA, N64, PS1, Neo Geo, PC Engine y más. Sin instalaciones." />
+  <meta name="theme-color" content="#cc0000" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="RetroPlay" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%23cc0000'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23f8f4e8' stroke-width='24'/%3E%3Cline x1='76' y1='256' x2='436' y2='256' stroke='%23f8f4e8' stroke-width='24'/%3E%3Ccircle cx='256' cy='256' r='50' fill='%23f8f4e8'/%3E%3Ccircle cx='256' cy='256' r='30' fill='%23cc0000' stroke='%23333' stroke-width='6'/%3E%3C/svg%3E" />
+  <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22RetroPlay%20Web%20Emulator%22%2C%22short_name%22%3A%22RetroPlay%22%2C%22description%22%3A%22Emulador%20web%20retro%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ede8d0%22%2C%22theme_color%22%3A%22%23cc0000%22%2C%22orientation%22%3A%22landscape%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%2520viewBox%3D%270%2520012%2520512%27%253E%253Crect%2520width%3D%27512%27%2520height%3D%27512%27%2520fill%3D%27%2523cc0000%27%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -36,6 +43,37 @@
       --panel-border: #888060;
       --screen-bg: #98b870;
       --screen-dark: #306030;
+      --body-bg:   #ede8d0;
+      --notice-bg: #fff8e0;
+      --notice-border: #c9972a;
+      --notice-text: #7a6030;
+      --rom-panel-bg: #ede8d0;
+      --file-display-bg: #f8f4e8;
+      --ctrl-item-bg: #ede8d0;
+      --ctrl-item-border: #d8d0b0;
+    }
+
+    /* ── DARK MODE VARIABLES ── */
+    body.dark {
+      --cream:     #1a1820;
+      --cream2:    #2a2535;
+      --white:     #252030;
+      --brown:     #9988cc;
+      --dark:      #0a0810;
+      --gray:      #6655aa;
+      --text:      #e8e0f8;
+      --panel-bg:  #2a2535;
+      --panel-border: #3a3050;
+      --screen-bg: #1a3020;
+      --screen-dark: #60cc80;
+      --body-bg:   #12101a;
+      --notice-bg: #1e1a10;
+      --notice-border: #8a6a10;
+      --notice-text: #c8a860;
+      --rom-panel-bg: #1e1828;
+      --file-display-bg: #2a2535;
+      --ctrl-item-bg: #1e1828;
+      --ctrl-item-border: #3a3050;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,7 +85,58 @@
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
     }
+
+    /* ── DARK MODE OVERRIDES ── */
+    body.dark .panel { background: var(--panel-bg); }
+    body.dark .panel-hdr { background: #0e0c18; }
+    body.dark .console-btn { background: var(--white); border-color: #3a3050; box-shadow: 3px 3px 0 #3a3050; }
+    body.dark .console-btn:hover { box-shadow: 4px 4px 0 #5a50aa; border-color: #5a50aa; }
+    body.dark .console-btn.active { background: var(--gold); border-color: var(--dark); }
+    body.dark .console-btn.active .cname { color: #1a1410; }
+    body.dark .console-btn .cyear { color: #6655aa; }
+    body.dark .gba-frame { background: #2a2540; }
+    body.dark .gba-screen-outer { background: #0e0c1a; border-color: #080610; }
+    body.dark .gba-screen-inner { background: var(--screen-bg); }
+    body.dark .screen-msg { color: var(--screen-dark); }
+    body.dark .rom-panel { background: var(--rom-panel-bg); border-color: #3a3050; box-shadow: 4px 4px 0 #3a3050; }
+    body.dark .file-display { background: var(--file-display-bg); border-color: #3a3050; color: #8877cc; }
+    body.dark .ctrl-item { background: var(--ctrl-item-bg); border-color: var(--ctrl-item-border); }
+    body.dark .ctrl-name { color: #9988cc; }
+    body.dark .key-badge { background: var(--file-display-bg); border-color: #5a50aa; color: var(--text); }
+    body.dark .notice { background: var(--notice-bg); border-color: var(--notice-border); box-shadow: 4px 4px 0 var(--notice-border); }
+    body.dark .notice p { color: var(--notice-text); }
+    body.dark .notice-title { color: var(--notice-border); }
+    body.dark .modal-box { background: #1a1828; }
+    body.dark .modal-hdr { background: #2a2050; }
+    body.dark .modal-body p, body.dark .modal-body ul { color: #c0b8e0; }
+    body.dark .modal-btn-cancel { background: #2a2535; border-color: #5a50aa; color: var(--text); box-shadow: 3px 3px 0 #3a3050; }
+    body.dark .hero-desc { color: #9988cc; }
+    body.dark .title-box { background: #0e0c20; }
+
+    /* ── DARK TOGGLE BUTTON ── */
+    .dark-toggle {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 100px;
+      padding: 5px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--white);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .dark-toggle:hover { border-color: var(--gold); color: var(--gold); }
+    .toggle-icon { font-size: 14px; line-height: 1; }
+    .toggle-label-dark { display: none; }
+    .toggle-label-light { display: inline; }
+    body.dark .toggle-label-dark { display: inline; }
+    body.dark .toggle-label-light { display: none; }
 
     body::before {
       content: '';
@@ -885,6 +974,206 @@
       background: #333;
     }
 
+    /* ── FEATURED GAMES ── */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+    .game-card {
+      background: var(--white);
+      border: 3px solid var(--brown);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 4px 4px 0 var(--brown);
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .game-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--brown); }
+    .game-card:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--brown); }
+    body.dark .game-card { background: var(--white); border-color: #3a3050; box-shadow: 4px 4px 0 #3a3050; }
+    body.dark .game-card:hover { box-shadow: 6px 6px 0 #5a50aa; border-color: #5a50aa; }
+
+    .game-cover {
+      width: 100%;
+      aspect-ratio: 1/1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 3px,
+        rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
+      );
+      pointer-events: none;
+    }
+    .game-info { padding: 8px 10px 10px; }
+    .game-title-txt {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(5px, 1vw, 6px);
+      color: var(--text);
+      display: block;
+      line-height: 1.7;
+      margin-bottom: 4px;
+    }
+    .game-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .game-console-tag {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: var(--white);
+      background: var(--red);
+      border-radius: 3px;
+      padding: 1px 6px;
+    }
+    .game-free-tag {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: #2a7a28;
+      background: #e0f0d0;
+      border: 1px solid #4caf50;
+      border-radius: 3px;
+      padding: 1px 6px;
+    }
+    body.dark .game-title-txt { color: var(--text); }
+    body.dark .game-free-tag { background: #1a2a1a; color: #60cc60; border-color: #3a6a3a; }
+
+    .games-note {
+      font-family: 'VT323', monospace;
+      font-size: clamp(13px, 2vw, 15px);
+      color: var(--gray);
+      line-height: 1.6;
+      margin-top: 1rem;
+      padding: 10px 14px;
+      background: var(--ctrl-item-bg);
+      border-radius: 8px;
+      border: 2px solid var(--ctrl-item-border);
+    }
+
+    /* ── PWA INSTALL BANNER ── */
+    .pwa-banner {
+      display: none;
+      background: var(--blue-dark);
+      border: 3px solid var(--dark);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 1.5rem;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: 4px 4px 0 var(--dark);
+    }
+    .pwa-banner.show { display: flex; }
+    .pwa-banner-text {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.2vw, 8px);
+      color: var(--gold);
+      line-height: 1.8;
+    }
+    .pwa-banner-sub {
+      font-family: 'VT323', monospace;
+      font-size: clamp(13px, 2vw, 15px);
+      color: var(--blue-light);
+      display: block;
+      margin-top: 4px;
+    }
+    .pwa-install-btn {
+      background: var(--gold);
+      color: var(--dark);
+      border: 3px solid var(--dark);
+      border-radius: 7px;
+      padding: 8px 16px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.2vw, 8px);
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--dark);
+      transition: all 0.1s;
+      white-space: nowrap;
+    }
+    .pwa-install-btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--dark); }
+    .pwa-dismiss-btn {
+      background: transparent;
+      border: none;
+      color: var(--blue-light);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+    }
+
+    /* ── SAVE STATES ── */
+    .save-slots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .save-slot {
+      background: var(--ctrl-item-bg);
+      border: 2px solid var(--ctrl-item-border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .slot-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .slot-num {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(7px, 1.3vw, 9px);
+      color: var(--gold-dark);
+    }
+    .slot-info {
+      font-family: 'VT323', monospace;
+      font-size: clamp(12px, 2vw, 14px);
+      color: var(--gray);
+    }
+    .slot-btns {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .slot-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      border-radius: 5px;
+      border: 2px solid var(--dark);
+      cursor: pointer;
+      padding: 6px 10px;
+      box-shadow: 2px 2px 0 var(--dark);
+      transition: all 0.1s;
+      letter-spacing: 0.5px;
+    }
+    .slot-btn:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--dark); }
+    .slot-btn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--dark); }
+    .slot-save { background: var(--green); color: #fff; }
+    .slot-load { background: var(--blue); color: #fff; }
+    .slot-del  { background: var(--red); color: #fff; }
+    .save-note {
+      font-family: 'VT323', monospace;
+      font-size: clamp(13px, 2vw, 15px);
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
     /* ── ANIMATIONS ── */
     .fade-up { opacity: 0; transform: translateY(14px); animation: fup 0.45s ease forwards; }
     @keyframes fup { to { opacity:1; transform:translateY(0); } }
@@ -919,6 +1208,11 @@
       <div class="header-pills">
         <span class="pill">NES · SNES · GBA</span>
         <span class="pill">N64 · PS1 · ARCADE</span>
+        <button class="dark-toggle" onclick="toggleDark()" id="dark-toggle">
+          <span class="toggle-icon">🌙</span>
+          <span class="toggle-label-light">OSCURO</span>
+          <span class="toggle-label-dark">CLARO</span>
+        </button>
       </div>
     </div>
     <div class="marquee-bar">
@@ -1091,6 +1385,59 @@
       </div>
     </div>
 
+    <!-- SAVE STATES PANEL -->
+    <div id="save-panel" style="display:none;" class="fade-up">
+      <div class="section-label">PARTIDAS GUARDADAS</div>
+      <div class="panel save-states-panel">
+        <div class="panel-hdr">
+          <span class="panel-hdr-title">// SAVE STATES — PERSISTENTES</span>
+          <div class="panel-dots">
+            <div class="pdot pdot-r"></div>
+            <div class="pdot pdot-y"></div>
+            <div class="pdot pdot-g"></div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="save-slots">
+            <div class="save-slot">
+              <div class="slot-header">
+                <span class="slot-num">SLOT 1</span>
+                <span class="slot-info" id="slot-info-1">vacío</span>
+              </div>
+              <div class="slot-btns">
+                <button class="slot-btn slot-save" onclick="saveStateToDB(1)">💾 GUARDAR</button>
+                <button class="slot-btn slot-load" onclick="loadStateFromDB(1)">▶ CARGAR</button>
+                <button class="slot-btn slot-del" onclick="deleteStateFromDB(1)">🗑</button>
+              </div>
+            </div>
+            <div class="save-slot">
+              <div class="slot-header">
+                <span class="slot-num">SLOT 2</span>
+                <span class="slot-info" id="slot-info-2">vacío</span>
+              </div>
+              <div class="slot-btns">
+                <button class="slot-btn slot-save" onclick="saveStateToDB(2)">💾 GUARDAR</button>
+                <button class="slot-btn slot-load" onclick="loadStateFromDB(2)">▶ CARGAR</button>
+                <button class="slot-btn slot-del" onclick="deleteStateFromDB(2)">🗑</button>
+              </div>
+            </div>
+            <div class="save-slot">
+              <div class="slot-header">
+                <span class="slot-num">SLOT 3</span>
+                <span class="slot-info" id="slot-info-3">vacío</span>
+              </div>
+              <div class="slot-btns">
+                <button class="slot-btn slot-save" onclick="saveStateToDB(3)">💾 GUARDAR</button>
+                <button class="slot-btn slot-load" onclick="loadStateFromDB(3)">▶ CARGAR</button>
+                <button class="slot-btn slot-del" onclick="deleteStateFromDB(3)">🗑</button>
+              </div>
+            </div>
+          </div>
+          <p class="save-note">Los estados se guardan en tu navegador y persisten aunque lo cierres. Cada juego tiene sus propios slots independientes.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- CONTROLES -->
     <div class="fade-up d4">
       <div class="section-label">CONTROLES</div>
@@ -1169,6 +1516,173 @@
           <p class="ps2-req">
             Requisitos mínimos: Windows 10/11 · CPU Intel/AMD 4 núcleos · GPU con soporte DirectX 11 · 8 GB RAM
           </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PWA INSTALL BANNER -->
+    <div class="pwa-banner" id="pwa-banner">
+      <div>
+        <div class="pwa-banner-text">📲 INSTALAR RETROPLAY COMO APP</div>
+        <span class="pwa-banner-sub">Añádela a tu pantalla de inicio y úsala sin navegador, como una app nativa</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="pwa-install-btn" onclick="installPWA()">⬇ INSTALAR</button>
+        <button class="pwa-dismiss-btn" onclick="dismissPWA()" title="Cerrar">✕</button>
+      </div>
+    </div>
+
+    <!-- JUEGOS DESTACADOS -->
+    <div class="fade-up">
+      <div class="section-label">JUEGOS DESTACADOS</div>
+      <div class="panel">
+        <div class="panel-hdr">
+          <span class="panel-hdr-title">// CLÁSICOS RECOMENDADOS — DOMINIO PÚBLICO Y HOMEBREW</span>
+          <div class="panel-dots">
+            <div class="pdot pdot-r"></div>
+            <div class="pdot pdot-y"></div>
+            <div class="pdot pdot-g"></div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="games-grid">
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#1a1a6a,#4a4aaa);">🌟</div>
+              <div class="game-info">
+                <span class="game-title-txt">SUPER MARIO BROS</span>
+                <div class="game-meta">
+                  <span class="game-console-tag">NES</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1985</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#2a6a2a,#6aaa4a);">🗡️</div>
+              <div class="game-info">
+                <span class="game-title-txt">THE LEGEND OF ZELDA</span>
+                <div class="game-meta">
+                  <span class="game-console-tag">NES</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1986</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#6a1a1a,#cc4444);">🎮</div>
+              <div class="game-info">
+                <span class="game-title-txt">CONTRA</span>
+                <div class="game-meta">
+                  <span class="game-console-tag">NES</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1988</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#1a4a6a,#4a9acc);">🏎️</div>
+              <div class="game-info">
+                <span class="game-title-txt">F-ZERO</span>
+                <div class="game-meta">
+                  <span class="game-console-tag" style="background:var(--blue-dark);">SNES</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1990</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#4a1a6a,#aa44cc);">🦸</div>
+              <div class="game-info">
+                <span class="game-title-txt">SUPER METROID</span>
+                <div class="game-meta">
+                  <span class="game-console-tag" style="background:var(--blue-dark);">SNES</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1994</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#2a5a1a,#5acc2a);">🐸</div>
+              <div class="game-info">
+                <span class="game-title-txt">FROGGER</span>
+                <div class="game-meta">
+                  <span class="game-console-tag" style="background:#555;">ARCADE</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1981</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#3a2a1a,#8a6a2a);">👊</div>
+              <div class="game-info">
+                <span class="game-title-txt">METAL SLUG</span>
+                <div class="game-meta">
+                  <span class="game-console-tag" style="background:#8a2a00;">NEO GEO</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1996</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#1a1a3a,#2a2a8a);">🚀</div>
+              <div class="game-info">
+                <span class="game-title-txt">PANG! (HOMEBREW)</span>
+                <div class="game-meta">
+                  <span class="game-free-tag">✓ LIBRE</span>
+                  <span class="game-console-tag">GBA</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#1a3a1a,#2a8a4a);">🧩</div>
+              <div class="game-info">
+                <span class="game-title-txt">TETRIS (GB)</span>
+                <div class="game-meta">
+                  <span class="game-console-tag" style="background:#444;">GAME BOY</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1989</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#3a1a1a,#aa3a1a);">🥊</div>
+              <div class="game-info">
+                <span class="game-title-txt">STREET FIGHTER II</span>
+                <div class="game-meta">
+                  <span class="game-console-tag" style="background:var(--blue-dark);">SNES</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1992</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#1a3a4a,#2a7a9a);">🐢</div>
+              <div class="game-info">
+                <span class="game-title-txt">SONIC THE HEDGEHOG</span>
+                <div class="game-meta">
+                  <span class="game-console-tag" style="background:#1a3a8a;">MEGA DR.</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1991</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-card">
+              <div class="game-cover" style="background:linear-gradient(135deg,#2a1a4a,#6a3aaa);">⭐</div>
+              <div class="game-info">
+                <span class="game-title-txt">SUPER MARIO WORLD</span>
+                <div class="game-meta">
+                  <span class="game-console-tag" style="background:var(--blue-dark);">SNES</span>
+                  <span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1990</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="games-note">
+            ⚠ Esta sección es solo una guía de referencia — RetroPlay no distribuye ROMs. Para jugar necesitas obtener las ROMs legalmente de los juegos que poseas. Los juegos marcados con ✓ LIBRE son homebrew de dominio público descargables gratuitamente.
+          </div>
         </div>
       </div>
     </div>
@@ -1254,6 +1768,66 @@
     let pendingWarningCore = null;
     let pendingWarningName = null;
     let pendingWarningAccept = null;
+
+    // ── PWA INSTALL ──
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!localStorage.getItem('pwa-dismissed')) {
+        document.getElementById('pwa-banner').classList.add('show');
+      }
+    });
+
+    async function installPWA() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        showToast('✅ RetroPlay instalada como app');
+        document.getElementById('pwa-banner').classList.remove('show');
+      }
+      deferredPrompt = null;
+    }
+
+    function dismissPWA() {
+      document.getElementById('pwa-banner').classList.remove('show');
+      localStorage.setItem('pwa-dismissed', '1');
+    }
+
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('pwa-banner').classList.remove('show');
+      showToast('✅ App instalada correctamente');
+    });
+
+    // ── SERVICE WORKER (PWA offline support) ──
+    if ('serviceWorker' in navigator) {
+      const swCode = `
+        const CACHE = 'retroplay-v1';
+        const ASSETS = ['./', './index.html'];
+        self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS))));
+        self.addEventListener('fetch', e => e.respondWith(
+          caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('./index.html')))
+        ));
+      `;
+      const blob = new Blob([swCode], { type: 'application/javascript' });
+      const swUrl = URL.createObjectURL(blob);
+      navigator.serviceWorker.register(swUrl).catch(() => {});
+    }
+
+    // ── DARK MODE ──
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      const icon = document.querySelector('.toggle-icon');
+      icon.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+      localStorage.setItem('retroplay-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+    // Restore saved preference
+    if (localStorage.getItem('retroplay-theme') === 'dark') {
+      document.body.classList.add('dark');
+      document.querySelector('.toggle-icon').textContent = '☀️';
+    }
 
     function selectConsole(el, core, name) {
       document.querySelectorAll('.console-btn').forEach(b => b.classList.remove('active'));
@@ -1351,6 +1925,7 @@
         document.getElementById('file-name').textContent = 'Selecciona tu ROM...';
         document.getElementById('gba-led').classList.remove('on');
         document.getElementById('status-file').textContent = 'en espera...';
+        document.getElementById('save-panel').style.display = 'none';
         emulatorLoaded = false;
       }
     }
@@ -1359,6 +1934,108 @@
       if (input.files && input.files.length > 0) {
         document.getElementById('file-name').textContent = input.files[0].name;
       }
+    }
+
+    // ── INDEXEDDB SAVE STATES ──
+    const DB_NAME = 'RetroPlaySaves';
+    const DB_VERSION = 1;
+    let db = null;
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = e => {
+          const d = e.target.result;
+          if (!d.objectStoreNames.contains('states')) {
+            d.createObjectStore('states', { keyPath: 'id' });
+          }
+        };
+        req.onsuccess = e => resolve(e.target.result);
+        req.onerror = e => reject(e.target.error);
+      });
+    }
+
+    function saveStateKey() {
+      return currentCore + '::' + document.getElementById('file-name').textContent;
+    }
+
+    async function saveStateToDB(slot) {
+      try {
+        if (!window.EJS_emulator) { showToast('⚠ Carga un juego primero'); return; }
+        const state = window.EJS_emulator.saveState();
+        if (!state) { showToast('⚠ Error al capturar estado'); return; }
+        db = db || await openDB();
+        const id = saveStateKey() + '::slot' + slot;
+        const tx = db.transaction('states', 'readwrite');
+        tx.objectStore('states').put({ id, state, slot, game: document.getElementById('file-name').textContent, core: currentCore, date: new Date().toLocaleString() });
+        tx.oncomplete = () => {
+          showToast('💾 Estado guardado en slot ' + slot);
+          refreshSaveSlots();
+        };
+      } catch(e) { showToast('⚠ Error: ' + e.message); }
+    }
+
+    async function loadStateFromDB(slot) {
+      try {
+        if (!window.EJS_emulator) { showToast('⚠ Carga un juego primero'); return; }
+        db = db || await openDB();
+        const id = saveStateKey() + '::slot' + slot;
+        const tx = db.transaction('states', 'readonly');
+        const req = tx.objectStore('states').get(id);
+        req.onsuccess = e => {
+          if (!e.target.result) { showToast('⚠ Slot ' + slot + ' vacío'); return; }
+          window.EJS_emulator.loadState(e.target.result.state);
+          showToast('▶ Estado cargado — slot ' + slot);
+        };
+      } catch(e) { showToast('⚠ Error: ' + e.message); }
+    }
+
+    async function deleteStateFromDB(slot) {
+      try {
+        db = db || await openDB();
+        const id = saveStateKey() + '::slot' + slot;
+        const tx = db.transaction('states', 'readwrite');
+        tx.objectStore('states').delete(id);
+        tx.oncomplete = () => { showToast('🗑 Slot ' + slot + ' borrado'); refreshSaveSlots(); };
+      } catch(e) {}
+    }
+
+    async function refreshSaveSlots() {
+      try {
+        db = db || await openDB();
+        const key = saveStateKey();
+        const tx = db.transaction('states', 'readonly');
+        const req = tx.objectStore('states').getAll();
+        req.onsuccess = e => {
+          const saves = e.target.result.filter(s => s.id.startsWith(key));
+          for (let i = 1; i <= 3; i++) {
+            const save = saves.find(s => s.slot === i);
+            const el = document.getElementById('slot-info-' + i);
+            if (el) el.textContent = save ? save.date : 'vacío';
+          }
+        };
+      } catch(e) {}
+    }
+
+    // ── TOAST NOTIFICATION ──
+    function showToast(msg) {
+      let toast = document.getElementById('rp-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'rp-toast';
+        toast.style.cssText = `
+          position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+          background:#1a1410; color:#f4c542; border:3px solid #c9972a;
+          border-radius:8px; padding:10px 20px; font-family:'Press Start 2P',monospace;
+          font-size:9px; letter-spacing:1px; z-index:9999; box-shadow:4px 4px 0 #000;
+          transition:opacity 0.3s; pointer-events:none;
+        `;
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.style.opacity = '1';
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
     }
 
     function loadRom() {
@@ -1383,6 +2060,7 @@
       window.EJS_gameUrl = url;
       window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
       window.EJS_startOnLoaded = true;
+      window.EJS_saveManager = true;
       window.EJS_Buttons = {
         saveState: true, loadState: true,
         fullscreen: true, screenshot: true, cacheManager: true
@@ -1399,6 +2077,11 @@
         document.getElementById('gba-led').classList.add('on');
         document.getElementById('status-file').textContent = file.name;
         document.getElementById('load-btn').disabled = false;
+        // Show save panel and refresh slots after emulator ready
+        setTimeout(() => {
+          document.getElementById('save-panel').style.display = 'block';
+          refreshSaveSlots();
+        }, 1500);
       };
       script.onerror = () => {
         document.getElementById('status-file').textContent = 'error — revisa conexión';
