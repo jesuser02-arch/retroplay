@@ -54,7 +54,12 @@
     }
 
     /* ── DARK MODE VARIABLES ── */
-    body.dark {
+    /* Dark mode always wins over any theme — use body.dark on all theme combos */
+    body.dark,
+    body.dark.theme-red,
+    body.dark.theme-blue,
+    body.dark.theme-gold,
+    body.dark.theme-green {
       --cream:     #1a1820;
       --cream2:    #2a2535;
       --white:     #252030;
@@ -74,6 +79,21 @@
       --file-display-bg: #2a2535;
       --ctrl-item-bg: #1e1828;
       --ctrl-item-border: #3a3050;
+      /* Keep accent colors theme-specific in dark mode */
+    }
+    /* Dark mode accent overrides per theme */
+    body.dark.theme-blue  {
+      --red: #3a6aee; --red-dark: #1a3aaa; --red-light: #6a9aff;
+      --gold: #7ab8ff; --gold-dark: #4a88dd;
+      --blue-dark: #0a1a5a; --blue-light: #aad0ff;
+    }
+    body.dark.theme-gold  {
+      --red: #e09820; --red-dark: #a06800; --red-light: #f8c040;
+      --gold: #f8e060; --gold-dark: #d0a030;
+    }
+    body.dark.theme-green {
+      --red: #30aa40; --red-dark: #1a7028; --red-light: #60dd70;
+      --gold: #80e898; --gold-dark: #40a850;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1573,6 +1593,215 @@
       .load-btn { width: 100%; text-align: center; }
       .header-pills { display: none; }
     }
+    /* ── THEMES ── */
+    body.theme-red {
+      --red: #cc0000; --red-dark: #990000; --red-light: #ff4444;
+      --gold: #f4c542; --gold-dark: #c9972a;
+      --blue-dark: #1a3a8a; --blue-light: #7aabff;
+      --cream: #ede8d0; --white: #f8f4e8; --cream2: #d8d0b0;
+      --brown: #7a6030; --text: #2a2010; --panel-bg: #c8c090;
+      --screen-bg: #98b870; --screen-dark: #306030;
+    }
+    body.theme-blue {
+      --red: #1a4acc; --red-dark: #0a2a8a; --red-light: #4a7aff;
+      --gold: #f4c542; --gold-dark: #c9972a;
+      --blue-dark: #0a1a6a; --blue-light: #7ab8ff;
+      --cream: #d8e8f8; --white: #eef4fc; --cream2: #b8cce8;
+      --brown: #3a5a80; --text: #0a1828; --panel-bg: #a8c0d8;
+      --screen-bg: #70a8d0; --screen-dark: #1a4878;
+    }
+    body.theme-gold {
+      --red: #c8880a; --red-dark: #8a5800; --red-light: #f8b030;
+      --gold: #f8d840; --gold-dark: #c89020;
+      --blue-dark: #3a2800; --blue-light: #f8e080;
+      --cream: #f8ecc0; --white: #fdf6e0; --cream2: #e8d898;
+      --brown: #8a6010; --text: #2a1800; --panel-bg: #d8c070;
+      --screen-bg: #c8b840; --screen-dark: #5a4000;
+    }
+    body.theme-green {
+      --red: #1a8a2a; --red-dark: #0a5a18; --red-light: #3acc50;
+      --gold: #f4c542; --gold-dark: #c9972a;
+      --blue-dark: #0a3a18; --blue-light: #80e898;
+      --cream: #d8f0d8; --white: #eefaee; --cream2: #b0d8b0;
+      --brown: #2a6030; --text: #0a1e0a; --panel-bg: #90c890;
+      --screen-bg: #70c870; --screen-dark: #1a5020;
+    }
+
+    /* ── THEME SWITCHER ── */
+    .theme-switcher {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .theme-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .theme-dot:hover { transform: scale(1.2); border-color: rgba(255,255,255,0.8); }
+    .theme-dot.active { border-color: #fff; box-shadow: 0 0 0 2px rgba(255,255,255,0.5); }
+    .theme-dot-red   { background: #cc0000; }
+    .theme-dot-blue  { background: #1a4acc; }
+    .theme-dot-gold  { background: #c8880a; }
+    .theme-dot-green { background: #1a8a2a; }
+
+    /* ── TOUCH CONTROLS ── */
+    #touch-controls {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 500;
+      pointer-events: none;
+      padding: 12px 16px 16px;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    }
+    #touch-controls.show { display: flex; justify-content: space-between; align-items: flex-end; }
+
+    .tc-left, .tc-right { pointer-events: all; }
+
+    /* D-pad */
+    .tc-dpad {
+      position: relative;
+      width: 110px; height: 110px;
+    }
+    .tc-dpad-btn {
+      position: absolute;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      color: rgba(255,255,255,0.8);
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: background 0.1s;
+      backdrop-filter: blur(4px);
+    }
+    .tc-dpad-btn:active, .tc-dpad-btn.pressed { background: rgba(255,255,255,0.35); }
+    .tc-up    { top:0;   left:37px; width:36px; height:36px; }
+    .tc-down  { bottom:0;left:37px; width:36px; height:36px; }
+    .tc-left  { top:37px;left:0;    width:36px; height:36px; }
+    .tc-right { top:37px;right:0;   width:36px; height:36px; }
+    .tc-mid   {
+      position:absolute; top:37px; left:37px;
+      width:36px; height:36px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 4px;
+    }
+
+    /* Action buttons */
+    .tc-btns { display: grid; grid-template-areas: '. b .' 'y . a' '. x .'; gap: 6px; width: 110px; height: 110px; }
+    .tc-btn {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.4);
+      transition: transform 0.08s, box-shadow 0.08s;
+      backdrop-filter: blur(4px);
+    }
+    .tc-btn:active, .tc-btn.pressed { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.4); }
+    .tc-a { grid-area:a; background: rgba(204,0,0,0.8); }
+    .tc-b { grid-area:b; background: rgba(201,151,42,0.8); }
+    .tc-x { grid-area:x; background: rgba(58,111,216,0.8); }
+    .tc-y { grid-area:y; background: rgba(76,175,80,0.8); }
+
+    /* Center controls: start/select */
+    .tc-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      pointer-events: all;
+    }
+    .tc-meta-btns { display: flex; gap: 10px; }
+    .tc-meta-btn {
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      user-select: none;
+      backdrop-filter: blur(4px);
+    }
+    .tc-meta-btn:active { background: rgba(255,255,255,0.25); }
+    .tc-toggle-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-family: 'VT323', monospace;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+    }
+
+    /* ── VISIT COUNTER ── */
+    .visit-counter {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--dark);
+      border: 3px solid var(--brown);
+      border-radius: 8px;
+      padding: 6px 14px;
+      box-shadow: 3px 3px 0 var(--dark);
+      margin-top: 12px;
+    }
+    .counter-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+    .counter-digits {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(10px,2vw,14px);
+      color: #00ff88;
+      letter-spacing: 3px;
+      text-shadow: 0 0 8px rgba(0,255,136,0.5);
+      min-width: 60px;
+      text-align: right;
+    }
+    .counter-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #00ff88;
+      box-shadow: 0 0 6px #00ff88;
+      animation: led-blink 2s ease-in-out infinite;
+    }
+
+    /* ── TOUCH CONTROLS TOGGLE IN HEADER ── */
+    .tc-header-btn {
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 100px;
+      padding: 5px 10px;
+      cursor: pointer;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--white);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tc-header-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .tc-header-btn.active { background: rgba(255,255,255,0.15); border-color: var(--gold); color: var(--gold); }
+
+    /* ── THEME DARK OVERRIDES handled above in dark mode section ── */
+
     @media (max-width: 340px) {
       .consoles-grid { grid-template-columns: repeat(3, 1fr); }
     }
@@ -1961,6 +2190,34 @@
     </div>
   </div>
 
+  <!-- TOUCH CONTROLS -->
+  <div id="touch-controls">
+    <div class="tc-left">
+      <div class="tc-dpad">
+        <div class="tc-dpad-btn tc-up"    id="tc-up"    ontouchstart="tcPress('up')"    ontouchend="tcRelease('up')">▲</div>
+        <div class="tc-dpad-btn tc-down"  id="tc-down"  ontouchstart="tcPress('down')"  ontouchend="tcRelease('down')">▼</div>
+        <div class="tc-dpad-btn tc-left"  id="tc-left"  ontouchstart="tcPress('left')"  ontouchend="tcRelease('left')">◀</div>
+        <div class="tc-dpad-btn tc-right" id="tc-right" ontouchstart="tcPress('right')" ontouchend="tcRelease('right')">▶</div>
+        <div class="tc-mid"></div>
+      </div>
+    </div>
+    <div class="tc-center">
+      <div class="tc-meta-btns">
+        <div class="tc-meta-btn" ontouchstart="tcPress('select')" ontouchend="tcRelease('select')">SELECT</div>
+        <div class="tc-meta-btn" ontouchstart="tcPress('start')"  ontouchend="tcRelease('start')">START</div>
+      </div>
+      <div class="tc-toggle-btn" onclick="toggleTouchControls()">✕ ocultar</div>
+    </div>
+    <div class="tc-right">
+      <div class="tc-btns">
+        <div class="tc-btn tc-b" id="tc-b" ontouchstart="tcPress('b')" ontouchend="tcRelease('b')">B</div>
+        <div class="tc-btn tc-y" id="tc-y" ontouchstart="tcPress('y')" ontouchend="tcRelease('y')">Y</div>
+        <div class="tc-btn tc-a" id="tc-a" ontouchstart="tcPress('a')" ontouchend="tcRelease('a')">A</div>
+        <div class="tc-btn tc-x" id="tc-x" ontouchstart="tcPress('x')" ontouchend="tcRelease('x')">X</div>
+      </div>
+    </div>
+  </div>
+
   <header>
     <div class="header-top">
       <div class="logo-wrap">
@@ -1970,6 +2227,13 @@
       <div class="header-pills">
         <span class="pill">NES · SNES · GBA</span>
         <span class="pill">N64 · PS1 · ARCADE</span>
+        <div class="theme-switcher">
+          <div class="theme-dot theme-dot-red active"   onclick="setTheme('red')"   title="Pokémon Rojo"></div>
+          <div class="theme-dot theme-dot-blue"         onclick="setTheme('blue')"  title="Pokémon Azul"></div>
+          <div class="theme-dot theme-dot-gold"         onclick="setTheme('gold')"  title="Pokémon Oro"></div>
+          <div class="theme-dot theme-dot-green"        onclick="setTheme('green')" title="Pokémon Verde"></div>
+        </div>
+        <button class="tc-header-btn" id="tc-toggle-header" onclick="toggleTouchControls()">🎮 TÁCTIL</button>
         <button class="dark-toggle" onclick="toggleDark()" id="dark-toggle">
           <span class="toggle-icon">🌙</span>
           <span class="toggle-label-light">OSCURO</span>
@@ -2366,523 +2630,7 @@
       </div>
     </div>
 
-    <!-- PWA INSTALL BANNER -->
-    <div class="pwa-banner" id="pwa-banner">
-      <div>
-        <div class="pwa-banner-text">📲 INSTALAR RETROPLAY COMO APP</div>
-        <span class="pwa-banner-sub">Añádela a tu pantalla de inicio y úsala sin navegador, como una app nativa</span>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <button class="pwa-install-btn" onclick="installPWA()">⬇ INSTALAR</button>
-        <button class="pwa-dismiss-btn" onclick="dismissPWA()" title="Cerrar">✕</button>
-      </div>
-    </div>
-
-    <!-- JUEGOS DESTACADOS -->
-    <div class="fade-up">
-      <div class="section-label">JUEGOS DESTACADOS</div>
-      <div class="panel">
-        <div class="panel-hdr">
-          <span class="panel-hdr-title">// CLÁSICOS RECOMENDADOS — DOMINIO PÚBLICO Y HOMEBREW</span>
-          <div class="panel-dots">
-            <div class="pdot pdot-r"></div>
-            <div class="pdot pdot-y"></div>
-            <div class="pdot pdot-g"></div>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="games-grid">
-
-            <!-- SUPER MARIO BROS -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#5c94fc;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <!-- sky -->
-                  <rect width="64" height="64" fill="#5c94fc"/>
-                  <!-- ground -->
-                  <rect x="0" y="52" width="64" height="12" fill="#c84c0c"/>
-                  <rect x="0" y="52" width="64" height="4" fill="#e8a000"/>
-                  <!-- mario body -->
-                  <rect x="26" y="20" width="12" height="4" fill="#cc0000"/>
-                  <rect x="24" y="24" width="16" height="8" fill="#cc0000"/>
-                  <rect x="26" y="24" width="12" height="4" fill="#f8c878"/>
-                  <rect x="24" y="32" width="6" height="4" fill="#0000cc"/>
-                  <rect x="34" y="32" width="6" height="4" fill="#0000cc"/>
-                  <rect x="22" y="36" width="8" height="4" fill="#cc4400"/>
-                  <rect x="34" y="36" width="8" height="4" fill="#cc4400"/>
-                  <!-- mario hat -->
-                  <rect x="26" y="16" width="14" height="4" fill="#cc0000"/>
-                  <rect x="24" y="20" width="16" height="2" fill="#cc0000"/>
-                  <!-- eyes -->
-                  <rect x="30" y="26" width="4" height="2" fill="#000"/>
-                  <!-- mushroom -->
-                  <rect x="8" y="36" width="10" height="8" fill="#f8f8f8"/>
-                  <rect x="6" y="30" width="14" height="8" fill="#cc0000"/>
-                  <rect x="8" y="30" width="4" height="4" fill="#f8f8f8"/>
-                  <rect x="14" y="30" width="4" height="4" fill="#f8f8f8"/>
-                  <!-- question block -->
-                  <rect x="44" y="28" width="12" height="12" fill="#e8a000"/>
-                  <rect x="46" y="30" width="8" height="8" fill="#f8c020"/>
-                  <rect x="49" y="31" width="2" height="6" fill="#e8a000"/>
-                  <rect x="48" y="32" width="4" height="2" fill="#e8a000"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">SUPER MARIO BROS</span>
-                <div class="game-meta"><span class="game-console-tag">NES</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1985</span></div>
-              </div>
-            </div>
-
-            <!-- ZELDA -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#386030;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#386030"/>
-                  <!-- trees -->
-                  <rect x="4" y="30" width="10" height="22" fill="#184818"/>
-                  <rect x="2" y="22" width="14" height="12" fill="#30a030"/>
-                  <rect x="4" y="14" width="10" height="12" fill="#30a030"/>
-                  <rect x="48" y="30" width="10" height="22" fill="#184818"/>
-                  <rect x="46" y="22" width="14" height="12" fill="#30a030"/>
-                  <rect x="48" y="14" width="10" height="12" fill="#30a030"/>
-                  <!-- link body -->
-                  <rect x="26" y="22" width="12" height="14" fill="#40a040"/>
-                  <rect x="28" y="36" width="4" height="6" fill="#e8d080"/>
-                  <rect x="32" y="36" width="4" height="6" fill="#e8d080"/>
-                  <rect x="26" y="42" width="6" height="4" fill="#803010"/>
-                  <rect x="32" y="42" width="6" height="4" fill="#803010"/>
-                  <!-- link head -->
-                  <rect x="28" y="14" width="8" height="8" fill="#e8d080"/>
-                  <!-- hat -->
-                  <rect x="26" y="12" width="12" height="4" fill="#40a040"/>
-                  <rect x="36" y="8" width="4" height="6" fill="#40a040"/>
-                  <!-- shield -->
-                  <rect x="20" y="24" width="6" height="8" fill="#0030c0"/>
-                  <rect x="22" y="26" width="2" height="4" fill="#c0c000"/>
-                  <!-- sword -->
-                  <rect x="40" y="16" width="2" height="14" fill="#c0c0c0"/>
-                  <rect x="38" y="28" width="6" height="2" fill="#c08000"/>
-                  <!-- triforce -->
-                  <rect x="29" y="48" width="6" height="2" fill="#f8c000"/>
-                  <rect x="27" y="50" width="10" height="2" fill="#f8c000"/>
-                  <rect x="32" y="46" width="2" height="2" fill="#f8c000"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">THE LEGEND OF ZELDA</span>
-                <div class="game-meta"><span class="game-console-tag">NES</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1986</span></div>
-              </div>
-            </div>
-
-            <!-- CONTRA -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#101830;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#101830"/>
-                  <!-- stars -->
-                  <rect x="10" y="8" width="2" height="2" fill="#f8f8f8"/>
-                  <rect x="30" y="14" width="2" height="2" fill="#f8f8f8"/>
-                  <rect x="50" y="6" width="2" height="2" fill="#f8f8f8"/>
-                  <rect x="20" y="18" width="2" height="2" fill="#aaaaaa"/>
-                  <rect x="54" y="20" width="2" height="2" fill="#aaaaaa"/>
-                  <!-- soldier body -->
-                  <rect x="14" y="28" width="10" height="14" fill="#c87030"/>
-                  <rect x="16" y="42" width="4" height="6" fill="#604020"/>
-                  <rect x="20" y="42" width="4" height="6" fill="#604020"/>
-                  <!-- soldier head -->
-                  <rect x="16" y="20" width="8" height="8" fill="#e8b870"/>
-                  <rect x="14" y="18" width="12" height="4" fill="#804020"/>
-                  <!-- gun -->
-                  <rect x="24" y="32" width="14" height="4" fill="#888888"/>
-                  <rect x="36" y="30" width="4" height="2" fill="#888888"/>
-                  <!-- soldier 2 -->
-                  <rect x="40" y="28" width="10" height="14" fill="#308030"/>
-                  <rect x="42" y="42" width="4" height="6" fill="#204020"/>
-                  <rect x="46" y="42" width="4" height="6" fill="#204020"/>
-                  <rect x="42" y="20" width="8" height="8" fill="#e8b870"/>
-                  <rect x="40" y="18" width="12" height="4" fill="#204040"/>
-                  <!-- gun 2 -->
-                  <rect x="26" y="34" width="14" height="4" fill="#666666"/>
-                  <!-- explosion -->
-                  <rect x="28" y="22" width="8" height="6" fill="#f8a000"/>
-                  <rect x="26" y="24" width="12" height="4" fill="#f8f000"/>
-                  <rect x="30" y="20" width="4" height="2" fill="#f8f8f8"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">CONTRA</span>
-                <div class="game-meta"><span class="game-console-tag">NES</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1988</span></div>
-              </div>
-            </div>
-
-            <!-- F-ZERO -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#000030;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#000030"/>
-                  <!-- track -->
-                  <rect x="0" y="36" width="64" height="6" fill="#c00000"/>
-                  <rect x="0" y="42" width="64" height="4" fill="#800000"/>
-                  <!-- track lines -->
-                  <rect x="8" y="38" width="8" height="2" fill="#f8f800"/>
-                  <rect x="28" y="38" width="8" height="2" fill="#f8f800"/>
-                  <rect x="48" y="38" width="8" height="2" fill="#f8f800"/>
-                  <!-- blue falcon -->
-                  <rect x="20" y="24" width="24" height="10" fill="#0050f8"/>
-                  <rect x="18" y="26" width="4" height="6" fill="#0050f8"/>
-                  <rect x="42" y="26" width="4" height="6" fill="#0050f8"/>
-                  <rect x="24" y="22" width="16" height="4" fill="#00a0f8"/>
-                  <rect x="28" y="20" width="8" height="2" fill="#f8f8f8"/>
-                  <!-- cockpit -->
-                  <rect x="28" y="24" width="8" height="6" fill="#00f8f8"/>
-                  <!-- engines glow -->
-                  <rect x="16" y="30" width="4" height="4" fill="#f85000"/>
-                  <rect x="44" y="30" width="4" height="4" fill="#f85000"/>
-                  <rect x="14" y="32" width="4" height="2" fill="#f8f800"/>
-                  <rect x="46" y="32" width="4" height="2" fill="#f8f800"/>
-                  <!-- speed lines -->
-                  <rect x="0" y="16" width="16" height="2" fill="#ffffff30"/>
-                  <rect x="0" y="20" width="12" height="2" fill="#ffffff20"/>
-                  <rect x="48" y="16" width="16" height="2" fill="#ffffff30"/>
-                  <rect x="52" y="20" width="12" height="2" fill="#ffffff20"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">F-ZERO</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:var(--blue-dark);">SNES</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1990</span></div>
-              </div>
-            </div>
-
-            <!-- SUPER METROID -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#0a0a18;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#0a0a18"/>
-                  <!-- planet bg -->
-                  <rect x="16" y="8" width="32" height="32" rx="16" fill="#301840"/>
-                  <!-- samus body -->
-                  <rect x="24" y="30" width="16" height="18" fill="#f8a800"/>
-                  <rect x="22" y="32" width="4" height="10" fill="#f8a800"/>
-                  <rect x="38" y="32" width="4" height="10" fill="#f8a800"/>
-                  <rect x="26" y="48" width="6" height="6" fill="#c87000"/>
-                  <rect x="32" y="48" width="6" height="6" fill="#c87000"/>
-                  <!-- samus helmet -->
-                  <rect x="24" y="20" width="16" height="12" fill="#f8a800"/>
-                  <rect x="26" y="22" width="12" height="8" fill="#00d0f8"/>
-                  <!-- arm cannon -->
-                  <rect x="38" y="34" width="12" height="6" fill="#c87000"/>
-                  <rect x="48" y="33" width="4" height="8" fill="#888888"/>
-                  <!-- charge glow -->
-                  <rect x="50" y="35" width="4" height="4" fill="#00f8f8"/>
-                  <!-- stars -->
-                  <rect x="4" y="4" width="2" height="2" fill="#f8f8f8"/>
-                  <rect x="56" y="10" width="2" height="2" fill="#f8f8f8"/>
-                  <rect x="6" y="54" width="2" height="2" fill="#f8f8f8"/>
-                  <rect x="58" y="50" width="2" height="2" fill="#aaaaaa"/>
-                  <rect x="10" y="44" width="2" height="2" fill="#aaaaaa"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">SUPER METROID</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:var(--blue-dark);">SNES</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1994</span></div>
-              </div>
-            </div>
-
-            <!-- FROGGER -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#1a7a1a;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#1a7a1a"/>
-                  <!-- road -->
-                  <rect x="0" y="32" width="64" height="16" fill="#404040"/>
-                  <rect x="0" y="38" width="64" height="4" fill="#f8f800" opacity="0.3"/>
-                  <!-- logs -->
-                  <rect x="4" y="12" width="20" height="8" fill="#8B4513"/>
-                  <rect x="6" y="14" width="16" height="4" fill="#a05020"/>
-                  <rect x="40" y="20" width="18" height="8" fill="#8B4513"/>
-                  <rect x="42" y="22" width="14" height="4" fill="#a05020"/>
-                  <!-- frog body -->
-                  <rect x="26" y="22" width="12" height="10" fill="#00c000"/>
-                  <rect x="24" y="24" width="16" height="6" fill="#00c000"/>
-                  <!-- frog eyes -->
-                  <rect x="26" y="22" width="4" height="4" fill="#00e000"/>
-                  <rect x="34" y="22" width="4" height="4" fill="#00e000"/>
-                  <rect x="27" y="23" width="2" height="2" fill="#000"/>
-                  <rect x="35" y="23" width="2" height="2" fill="#000"/>
-                  <!-- frog legs -->
-                  <rect x="20" y="28" width="6" height="4" fill="#00c000"/>
-                  <rect x="38" y="28" width="6" height="4" fill="#00c000"/>
-                  <rect x="16" y="30" width="6" height="2" fill="#00a000"/>
-                  <rect x="42" y="30" width="6" height="2" fill="#00a000"/>
-                  <!-- car -->
-                  <rect x="10" y="36" width="16" height="8" fill="#f80000"/>
-                  <rect x="12" y="34" width="12" height="4" fill="#f84040"/>
-                  <rect x="10" y="42" width="4" height="2" fill="#202020"/>
-                  <rect x="22" y="42" width="4" height="2" fill="#202020"/>
-                  <!-- lily pad -->
-                  <rect x="26" y="50" width="12" height="8" rx="4" fill="#00a000"/>
-                  <rect x="30" y="52" width="4" height="4" fill="#00c000"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">FROGGER</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:#555;">ARCADE</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1981</span></div>
-              </div>
-            </div>
-
-            <!-- METAL SLUG -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#c87820;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#c87820"/>
-                  <!-- ground -->
-                  <rect x="0" y="50" width="64" height="14" fill="#804010"/>
-                  <!-- tank body -->
-                  <rect x="8" y="34" width="36" height="16" fill="#7a8830"/>
-                  <rect x="6" y="38" width="40" height="8" fill="#6a7820"/>
-                  <!-- tank turret -->
-                  <rect x="16" y="26" width="22" height="10" fill="#8a9840"/>
-                  <!-- tank cannon -->
-                  <rect x="34" y="28" width="20" height="4" fill="#6a7820"/>
-                  <rect x="52" y="27" width="4" height="6" fill="#505050"/>
-                  <!-- tank wheels -->
-                  <rect x="8" y="48" width="8" height="6" fill="#404040"/>
-                  <rect x="20" y="48" width="8" height="6" fill="#404040"/>
-                  <rect x="32" y="48" width="8" height="6" fill="#404040"/>
-                  <!-- soldier -->
-                  <rect x="44" y="32" width="10" height="18" fill="#e8a060"/>
-                  <rect x="46" y="24" width="8" height="8" fill="#f8c870"/>
-                  <rect x="44" y="22" width="12" height="4" fill="#c87020"/>
-                  <rect x="52" y="36" width="8" height="4" fill="#888"/>
-                  <!-- explosion -->
-                  <rect x="2" y="14" width="10" height="8" fill="#f8a000"/>
-                  <rect x="4" y="10" width="6" height="6" fill="#f8f000"/>
-                  <rect x="0" y="16" width="6" height="4" fill="#f85000"/>
-                  <rect x="8" y="12" width="4" height="4" fill="#f8f8f8"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">METAL SLUG</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:#8a2a00;">NEO GEO</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1996</span></div>
-              </div>
-            </div>
-
-            <!-- TETRIS -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#000080;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#000080"/>
-                  <!-- tetris board -->
-                  <rect x="16" y="4" width="32" height="56" fill="#000040"/>
-                  <!-- filled rows -->
-                  <rect x="16" y="52" width="32" height="8" fill="#f80000"/>
-                  <rect x="16" y="44" width="24" height="8" fill="#00c000"/>
-                  <rect x="16" y="36" width="28" height="8" fill="#00c0c0"/>
-                  <!-- pieces -->
-                  <!-- I piece cyan -->
-                  <rect x="16" y="28" width="8" height="8" fill="#00f0f0"/>
-                  <rect x="24" y="28" width="8" height="8" fill="#00f0f0"/>
-                  <rect x="32" y="28" width="8" height="8" fill="#00f0f0"/>
-                  <rect x="40" y="28" width="8" height="8" fill="#00f0f0"/>
-                  <!-- T piece purple -->
-                  <rect x="24" y="16" width="8" height="8" fill="#a000f0"/>
-                  <rect x="16" y="20" width="8" height="4" fill="#a000f0"/>
-                  <rect x="32" y="20" width="8" height="4" fill="#a000f0"/>
-                  <!-- L piece orange -->
-                  <rect x="36" y="8" width="8" height="8" fill="#f0a000"/>
-                  <rect x="36" y="16" width="8" height="8" fill="#f0a000"/>
-                  <rect x="36" y="24" width="8" height="4" fill="#f0a000"/>
-                  <rect x="40" y="24" width="4" height="4" fill="#f0a000"/>
-                  <!-- grid lines -->
-                  <rect x="16" y="4" width="1" height="56" fill="#ffffff10"/>
-                  <rect x="24" y="4" width="1" height="56" fill="#ffffff10"/>
-                  <rect x="32" y="4" width="1" height="56" fill="#ffffff10"/>
-                  <rect x="40" y="4" width="1" height="56" fill="#ffffff10"/>
-                  <rect x="47" y="4" width="1" height="56" fill="#ffffff10"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">TETRIS</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:#444;">GAME BOY</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1989</span></div>
-              </div>
-            </div>
-
-            <!-- STREET FIGHTER II -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#1a0a30;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#1a0a30"/>
-                  <!-- stage floor -->
-                  <rect x="0" y="50" width="64" height="14" fill="#c07030"/>
-                  <rect x="0" y="50" width="64" height="4" fill="#e09050"/>
-                  <!-- ryu body -->
-                  <rect x="6" y="26" width="14" height="18" fill="#f8f8f8"/>
-                  <rect x="8" y="44" width="5" height="6" fill="#f8f8f8"/>
-                  <rect x="15" y="44" width="5" height="6" fill="#f8f8f8"/>
-                  <rect x="4" y="30" width="4" height="10" fill="#f8f8f8"/>
-                  <rect x="18" y="28" width="6" height="8" fill="#f8f8f8"/><!-- punch arm -->
-                  <!-- ryu head -->
-                  <rect x="8" y="18" width="10" height="8" fill="#e8b870"/>
-                  <rect x="6" y="16" width="14" height="4" fill="#cc0000"/><!-- headband -->
-                  <!-- ryu belt -->
-                  <rect x="6" y="36" width="14" height="3" fill="#cc0000"/>
-                  <!-- ken body -->
-                  <rect x="44" y="26" width="14" height="18" fill="#f85000"/>
-                  <rect x="46" y="44" width="5" height="6" fill="#f8f8f8"/>
-                  <rect x="53" y="44" width="5" height="6" fill="#f8f8f8"/>
-                  <rect x="40" y="28" width="6" height="8" fill="#f85000"/><!-- punch -->
-                  <rect x="58" y="30" width="4" height="10" fill="#f85000"/>
-                  <!-- ken head -->
-                  <rect x="46" y="18" width="10" height="8" fill="#e8b870"/>
-                  <rect x="44" y="14" width="14" height="6" fill="#f8c000"/><!-- blonde hair -->
-                  <!-- hadouken glow -->
-                  <rect x="24" y="30" width="16" height="8" fill="#0080f8"/>
-                  <rect x="26" y="28" width="12" height="12" fill="#00c0f8" opacity="0.6"/>
-                  <rect x="30" y="26" width="4" height="16" fill="#f8f8f8" opacity="0.4"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">STREET FIGHTER II</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:var(--blue-dark);">SNES</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1992</span></div>
-              </div>
-            </div>
-
-            <!-- SONIC -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#2090e0;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#2090e0"/>
-                  <!-- clouds -->
-                  <rect x="4" y="10" width="16" height="6" fill="#f8f8f8" rx="2"/>
-                  <rect x="44" y="14" width="14" height="6" fill="#f8f8f8" rx="2"/>
-                  <!-- ground -->
-                  <rect x="0" y="50" width="64" height="14" fill="#30a030"/>
-                  <rect x="0" y="50" width="64" height="4" fill="#50c050"/>
-                  <!-- ring -->
-                  <rect x="48" y="28" width="10" height="10" fill="none"/>
-                  <rect x="48" y="28" width="10" height="2" fill="#f8c000"/>
-                  <rect x="48" y="36" width="10" height="2" fill="#f8c000"/>
-                  <rect x="48" y="28" width="2" height="10" fill="#f8c000"/>
-                  <rect x="56" y="28" width="2" height="10" fill="#f8c000"/>
-                  <!-- sonic body -->
-                  <rect x="16" y="28" width="18" height="14" fill="#0040f0"/>
-                  <rect x="18" y="42" width="6" height="6" fill="#c87030"/>
-                  <rect x="26" y="42" width="6" height="6" fill="#c87030"/>
-                  <!-- sonic head -->
-                  <rect x="20" y="18" width="16" height="12" fill="#0040f0"/>
-                  <!-- spines -->
-                  <rect x="14" y="16" width="8" height="4" fill="#0040f0"/>
-                  <rect x="10" y="20" width="8" height="4" fill="#0040f0"/>
-                  <rect x="8" y="26" width="8" height="4" fill="#0040f0"/>
-                  <!-- face -->
-                  <rect x="28" y="22" width="8" height="6" fill="#e8b870"/>
-                  <rect x="30" y="20" width="6" height="4" fill="#e8b870"/>
-                  <!-- eye -->
-                  <rect x="30" y="22" width="4" height="3" fill="#000"/>
-                  <rect x="31" y="22" width="2" height="2" fill="#008000"/>
-                  <!-- shoes -->
-                  <rect x="16" y="46" width="8" height="4" fill="#c00000"/>
-                  <rect x="26" y="46" width="8" height="4" fill="#c00000"/>
-                  <!-- speed lines -->
-                  <rect x="0" y="34" width="14" height="2" fill="#f8f8f8" opacity="0.5"/>
-                  <rect x="0" y="38" width="10" height="2" fill="#f8f8f8" opacity="0.3"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">SONIC THE HEDGEHOG</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:#1a3a8a;">MEGA DR.</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1991</span></div>
-              </div>
-            </div>
-
-            <!-- SUPER MARIO WORLD -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#6898f8;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#6898f8"/>
-                  <!-- ground -->
-                  <rect x="0" y="50" width="64" height="14" fill="#30c030"/>
-                  <rect x="0" y="50" width="64" height="4" fill="#50e050"/>
-                  <!-- yoshi body -->
-                  <rect x="30" y="28" width="20" height="16" fill="#00c000"/>
-                  <rect x="28" y="30" width="4" height="8" fill="#00c000"/>
-                  <rect x="50" y="30" width="4" height="6" fill="#00c000"/>
-                  <!-- yoshi head/snout -->
-                  <rect x="38" y="18" width="16" height="12" fill="#00c000"/>
-                  <rect x="50" y="22" width="8" height="8" fill="#e8e840"/>
-                  <!-- yoshi eye -->
-                  <rect x="44" y="20" width="6" height="5" fill="#f8f8f8"/>
-                  <rect x="46" y="21" width="3" height="3" fill="#000"/>
-                  <!-- yoshi legs -->
-                  <rect x="32" y="44" width="6" height="6" fill="#e87030"/>
-                  <rect x="42" y="44" width="6" height="6" fill="#e87030"/>
-                  <!-- mario on yoshi -->
-                  <rect x="34" y="20" width="10" height="10" fill="#cc0000"/>
-                  <rect x="36" y="16" width="10" height="6" fill="#cc0000"/>
-                  <rect x="36" y="22" width="8" height="4" fill="#f8c878"/>
-                  <!-- cape -->
-                  <rect x="28" y="22" width="8" height="10" fill="#f8f800"/>
-                  <!-- castle far -->
-                  <rect x="4" y="30" width="16" height="20" fill="#c8c8c8"/>
-                  <rect x="4" y="24" width="4" height="8" fill="#c8c8c8"/>
-                  <rect x="10" y="24" width="4" height="8" fill="#c8c8c8"/>
-                  <rect x="16" y="24" width="4" height="8" fill="#c8c8c8"/>
-                  <rect x="8" y="36" width="6" height="14" fill="#604030"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">SUPER MARIO WORLD</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:var(--blue-dark);">SNES</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1990</span></div>
-              </div>
-            </div>
-
-            <!-- PC ENGINE GAME - BONK -->
-            <div class="game-card">
-              <div class="game-cover" style="background:#e04000;">
-                <svg viewBox="0 0 64 64" width="100%" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
-                  <rect width="64" height="64" fill="#e04000"/>
-                  <!-- platforms -->
-                  <rect x="0" y="52" width="64" height="12" fill="#804000"/>
-                  <rect x="10" y="38" width="18" height="6" fill="#804000"/>
-                  <rect x="36" y="28" width="18" height="6" fill="#804000"/>
-                  <!-- bonk body - caveman -->
-                  <rect x="22" y="28" width="12" height="14" fill="#f8c878"/>
-                  <!-- club -->
-                  <rect x="12" y="22" width="12" height="4" fill="#804000"/>
-                  <rect x="10" y="18" width="8" height="8" fill="#604000"/>
-                  <!-- bonk head (huge) -->
-                  <rect x="18" y="12" width="22" height="18" fill="#f8c878"/>
-                  <!-- headband -->
-                  <rect x="18" y="14" width="22" height="4" fill="#f82000"/>
-                  <!-- bonk eyes -->
-                  <rect x="22" y="20" width="5" height="5" fill="#f8f8f8"/>
-                  <rect x="31" y="20" width="5" height="5" fill="#f8f8f8"/>
-                  <rect x="23" y="21" width="3" height="3" fill="#000"/>
-                  <rect x="32" y="21" width="3" height="3" fill="#000"/>
-                  <!-- bonk teeth -->
-                  <rect x="24" y="26" width="4" height="3" fill="#f8f8f8"/>
-                  <rect x="30" y="26" width="4" height="3" fill="#f8f8f8"/>
-                  <!-- legs -->
-                  <rect x="22" y="42" width="5" height="6" fill="#f8a050"/>
-                  <rect x="31" y="42" width="5" height="6" fill="#f8a050"/>
-                  <!-- stars from bonk -->
-                  <rect x="44" y="8" width="4" height="4" fill="#f8f800"/>
-                  <rect x="52" y="14" width="4" height="4" fill="#f8f800"/>
-                  <rect x="48" y="4" width="2" height="2" fill="#f8f8f8"/>
-                </svg>
-              </div>
-              <div class="game-info">
-                <span class="game-title-txt">BONK'S ADVENTURE</span>
-                <div class="game-meta"><span class="game-console-tag" style="background:#8a4000;">PC ENGINE</span><span style="font-family:'VT323',monospace;font-size:11px;color:var(--gray);">1989</span></div>
-              </div>
-            </div>
-
-          </div>
-          <div class="games-note">
-            ⚠ Esta sección es solo una guía de referencia — RetroPlay no distribuye ROMs. Para jugar necesitas obtener las ROMs legalmente de los juegos que poseas. Los juegos marcados con ✓ LIBRE son homebrew de dominio público descargables gratuitamente.
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- JUEGOS DESTACADOS: sección eliminada temporalmente, conservar CSS para uso futuro -->
 
     <!-- CONSIGUE TUS ROMS -->
     <div class="roms-section fade-up">
@@ -3226,10 +2974,17 @@
   <div class="grass-divider"></div>
 
   <footer>
-    <span class="footer-logo">★ RETROPLAY WEB EMULATOR v2.0 ★</span>
+    <span class="footer-logo">★ RETROPLAY WEB EMULATOR v3.0 ★</span>
     <div class="footer-sub">
       Powered by <a href="https://emulatorjs.org" target="_blank">EmulatorJS</a> &nbsp;·&nbsp;
       NES · SNES · GBA · GB · GBC · NDS · N64 · PS1 · MEGA DRIVE · MASTER SYS · GAME GEAR · ATARI · NEO GEO · PC ENGINE · ARCADE · PSP (BETA)
+    </div>
+    <div style="display:flex;justify-content:center;margin-top:10px;">
+      <div class="visit-counter">
+        <div class="counter-dot"></div>
+        <span class="counter-label">VISITAS</span>
+        <span class="counter-digits" id="visit-count">000000</span>
+      </div>
     </div>
     <div class="footer-balls">
       <div class="mini-ball"></div>
@@ -3731,6 +3486,115 @@
       const swUrl = URL.createObjectURL(blob);
       navigator.serviceWorker.register(swUrl).catch(() => {});
     }
+
+    // ── THEMES ──
+    const THEMES = ['red','blue','gold','green'];
+    function setTheme(theme) {
+      // Remove all theme classes but preserve dark class
+      THEMES.forEach(t => document.body.classList.remove('theme-' + t));
+      document.body.classList.add('theme-' + theme);
+      document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
+      document.querySelector('.theme-dot-' + theme)?.classList.add('active');
+      localStorage.setItem('rp-theme', theme);
+    }
+    // Restore saved theme BEFORE dark mode so dark wins
+    const savedTheme = localStorage.getItem('rp-theme') || 'red';
+    document.body.classList.add('theme-' + savedTheme);
+    document.querySelector('.theme-dot-' + savedTheme)?.classList.add('active');
+    document.querySelectorAll('.theme-dot').forEach(d => {
+      if (!d.classList.contains('theme-dot-' + savedTheme)) d.classList.remove('active');
+    });
+
+    // ── TOUCH CONTROLS ──
+    let touchControlsVisible = false;
+
+    // Key mappings for touch buttons
+    const TC_KEYS = {
+      up:     { key: 'ArrowUp',    keyCode: 38 },
+      down:   { key: 'ArrowDown',  keyCode: 40 },
+      left:   { key: 'ArrowLeft',  keyCode: 37 },
+      right:  { key: 'ArrowRight', keyCode: 39 },
+      a:      { key: 'z',          keyCode: 90 },
+      b:      { key: 'x',          keyCode: 88 },
+      x:      { key: 'a',          keyCode: 65 },
+      y:      { key: 's',          keyCode: 83 },
+      start:  { key: 'Enter',      keyCode: 13 },
+      select: { key: 'Shift',      keyCode: 16 },
+    };
+
+    function tcPress(btn) {
+      const k = TC_KEYS[btn];
+      if (!k) return;
+      const el = document.getElementById('tc-' + btn);
+      if (el) el.classList.add('pressed');
+      // Fire keydown on the game container
+      const target = document.getElementById('game') || document.body;
+      target.dispatchEvent(new KeyboardEvent('keydown', { key: k.key, keyCode: k.keyCode, bubbles: true, cancelable: true }));
+      // Also try EJS emulator directly
+      try {
+        if (window.EJS_emulator) window.EJS_emulator.gameManager?.simulateInput?.(btn, true);
+      } catch(e) {}
+    }
+
+    function tcRelease(btn) {
+      const k = TC_KEYS[btn];
+      if (!k) return;
+      const el = document.getElementById('tc-' + btn);
+      if (el) el.classList.remove('pressed');
+      const target = document.getElementById('game') || document.body;
+      target.dispatchEvent(new KeyboardEvent('keyup', { key: k.key, keyCode: k.keyCode, bubbles: true, cancelable: true }));
+      try {
+        if (window.EJS_emulator) window.EJS_emulator.gameManager?.simulateInput?.(btn, false);
+      } catch(e) {}
+    }
+
+    function toggleTouchControls() {
+      touchControlsVisible = !touchControlsVisible;
+      const tc = document.getElementById('touch-controls');
+      const btn = document.getElementById('tc-toggle-header');
+      tc.classList.toggle('show', touchControlsVisible);
+      btn?.classList.toggle('active', touchControlsVisible);
+      localStorage.setItem('rp-touch', touchControlsVisible ? '1' : '0');
+    }
+
+    // Auto-show touch controls on mobile
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      const saved = localStorage.getItem('rp-touch');
+      if (saved !== '0') {
+        touchControlsVisible = true;
+        document.getElementById('touch-controls').classList.add('show');
+        document.getElementById('tc-toggle-header')?.classList.add('active');
+      }
+    } else if (localStorage.getItem('rp-touch') === '1') {
+      touchControlsVisible = true;
+      document.getElementById('touch-controls').classList.add('show');
+      document.getElementById('tc-toggle-header')?.classList.add('active');
+    }
+
+    // ── VISIT COUNTER ──
+    (function() {
+      const KEY = 'rp-visit-count';
+      const SESSION_KEY = 'rp-visited-session';
+      let count = parseInt(localStorage.getItem(KEY) || '0');
+      // Only count once per session
+      if (!sessionStorage.getItem(SESSION_KEY)) {
+        count++;
+        localStorage.setItem(KEY, count);
+        sessionStorage.setItem(SESSION_KEY, '1');
+      }
+      // Animate counter rolling up
+      const el = document.getElementById('visit-count');
+      if (!el) return;
+      const target = count;
+      const start = Math.max(0, target - 30);
+      let current = start;
+      const step = () => {
+        current = Math.min(current + Math.ceil((target - current) / 4 + 1), target);
+        el.textContent = String(current).padStart(6, '0');
+        if (current < target) requestAnimationFrame(step);
+      };
+      setTimeout(() => requestAnimationFrame(step), 1000);
+    })();
 
     // ── DARK MODE ──
     function toggleDark() {
