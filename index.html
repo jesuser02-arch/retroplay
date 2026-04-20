@@ -2579,53 +2579,202 @@
       </div>
     </div>
 
-    <!-- PS2 SECTION -->
+    <!-- EMULADORES DE ESCRITORIO -->
     <div class="fade-up d5">
-      <div class="section-label">PLAYSTATION 2</div>
+      <div class="section-label">EMULADORES DE ESCRITORIO</div>
       <div class="ps2-panel">
         <div class="ps2-hdr">
-          <span class="ps2-hdr-title">// PLAYSTATION 2 — PCSX2</span>
-          <span class="ps2-badge">NO DISPONIBLE EN WEB</span>
+          <span class="ps2-hdr-title">// CONSOLAS NO DISPONIBLES EN WEB</span>
+          <span class="ps2-badge">REQUIEREN PC</span>
         </div>
         <div class="ps2-body">
-          <span class="ps2-logo">PlayStation 2</span>
+
           <p class="ps2-desc">
-            La PS2 no puede emularse en el navegador — es demasiado potente para WebAssembly.
-            Para jugar a PS2, necesitas <strong style="color:#7a9fff;">PCSX2</strong>, el emulador de escritorio más completo del mundo para esta consola. Es gratis, open source y funciona en Windows, Mac y Linux.
+            Algunas consolas son demasiado potentes para emularse en el navegador. Aquí tienes los mejores emuladores de escritorio para cada una — todos <strong style="color:#7a9fff;">gratuitos, open source y legales</strong>. El emulador en sí es legal; lo que necesitas es poseer los juegos originales o usar ROMs de dominio público.
           </p>
-          <div class="ps2-why">
-            <div class="ps2-why-title">⚠ ¿POR QUÉ NO EN EL NAVEGADOR?</div>
+
+          <!-- LEGAL NOTICE BOX -->
+          <div class="ps2-why" style="margin-bottom:1.5rem;">
+            <div class="ps2-why-title">⚖ ¿SON LEGALES LOS EMULADORES?</div>
             <ul>
-              <li>Las ISOs de PS2 pesan entre 1 GB y 8 GB</li>
-              <li>Requiere emular el chip Emotion Engine de 300 MHz</li>
-              <li>Necesita acceso directo a la GPU para rendimiento real</li>
-              <li>No existe ningún core de PS2 para EmulatorJS ni WebAssembly estable</li>
+              <li>Sí — emular hardware es legal en la mayoría de países, incluyendo España y la UE</li>
+              <li>El Tribunal Supremo de EE.UU. confirmó en 1999 que los emuladores son legales (caso Bleem)</li>
+              <li>Lo que puede ser ilegal es distribuir ROMs con copyright activo — no el emulador</li>
+              <li>Usar ROMs de juegos que posees físicamente es legal bajo derecho de copia privada en España</li>
+              <li>Los juegos de dominio público y homebrew son 100% libres para cualquier uso</li>
             </ul>
           </div>
-          <div class="ps2-steps">
-            <div class="ps2-step">
-              <span class="step-num">01</span>
-              <span class="step-txt">Descarga PCSX2 desde su web oficial</span>
+
+          <!-- EMULATORS GRID -->
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:1.5rem;">
+
+            <!-- PCSX2 - PS2 -->
+            <div style="background:#0a0a18;border:2px solid #2a2a5a;border-radius:10px;padding:1rem;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <span style="font-size:28px;">⬛</span>
+                <div>
+                  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#7a9fff;">PCSX2</div>
+                  <div style="font-family:'VT323',monospace;font-size:14px;color:#4a4a8a;">PlayStation 2 · 2000</div>
+                </div>
+                <span style="margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:#00cc00;background:rgba(0,204,0,0.1);border:1px solid rgba(0,204,0,0.3);border-radius:4px;padding:3px 7px;">ESTABLE</span>
+              </div>
+              <p style="font-family:'VT323',monospace;font-size:15px;color:#6666aa;line-height:1.6;margin-bottom:10px;">El emulador de PS2 más completo del mundo. Compatible con más del 97% del catálogo. Gráficos en HD, filtros modernos y soporte para mando.</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Windows</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Mac</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Linux</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#aaaaaa;border:1px solid #333;border-radius:3px;padding:1px 7px;">.iso .bin</span>
+              </div>
+              <a href="https://pcsx2.net" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#3a6fd8;color:#fff;border:2px solid #1a3a8a;border-radius:6px;padding:7px 14px;font-family:'Press Start 2P',monospace;font-size:7px;text-decoration:none;box-shadow:3px 3px 0 #0a1a50;">⬇ DESCARGAR</a>
             </div>
-            <div class="ps2-step">
-              <span class="step-num">02</span>
-              <span class="step-txt">Consigue la BIOS de tu PS2 original</span>
+
+            <!-- DOLPHIN - GameCube/Wii -->
+            <div style="background:#0a0a18;border:2px solid #2a2a5a;border-radius:10px;padding:1rem;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <span style="font-size:28px;">🐬</span>
+                <div>
+                  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#7a9fff;">DOLPHIN</div>
+                  <div style="font-family:'VT323',monospace;font-size:14px;color:#4a4a8a;">GameCube · Wii · 2001/2006</div>
+                </div>
+                <span style="margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:#00cc00;background:rgba(0,204,0,0.1);border:1px solid rgba(0,204,0,0.3);border-radius:4px;padding:3px 7px;">ESTABLE</span>
+              </div>
+              <p style="font-family:'VT323',monospace;font-size:15px;color:#6666aa;line-height:1.6;margin-bottom:10px;">El mejor emulador de GameCube y Wii. Muchos juegos corren a 4K con mejoras gráficas. Mario Galaxy, Zelda Wind Waker, Smash Bros Melee...</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Windows</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Mac</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Linux</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#aaaaaa;border:1px solid #333;border-radius:3px;padding:1px 7px;">.iso .gcm .wbfs</span>
+              </div>
+              <a href="https://dolphin-emu.org" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#3a6fd8;color:#fff;border:2px solid #1a3a8a;border-radius:6px;padding:7px 14px;font-family:'Press Start 2P',monospace;font-size:7px;text-decoration:none;box-shadow:3px 3px 0 #0a1a50;">⬇ DESCARGAR</a>
             </div>
-            <div class="ps2-step">
-              <span class="step-num">03</span>
-              <span class="step-txt">Carga tu ISO y configura el mando</span>
+
+            <!-- CITRA/LIME3DS - 3DS -->
+            <div style="background:#0a0a18;border:2px solid #2a2a5a;border-radius:10px;padding:1rem;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <span style="font-size:28px;">🔴</span>
+                <div>
+                  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#7a9fff;">LIME3DS</div>
+                  <div style="font-family:'VT323',monospace;font-size:14px;color:#4a4a8a;">Nintendo 3DS · 2011</div>
+                </div>
+                <span style="margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:#f8c000;background:rgba(248,192,0,0.1);border:1px solid rgba(248,192,0,0.3);border-radius:4px;padding:3px 7px;">BUENO</span>
+              </div>
+              <p style="font-family:'VT323',monospace;font-size:15px;color:#6666aa;line-height:1.6;margin-bottom:10px;">Fork activo del antiguo Citra. Emula Nintendo 3DS con buena compatibilidad. Pokémon X/Y, Animal Crossing, Fire Emblem...</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Windows</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Linux</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#aaaaaa;border:1px solid #333;border-radius:3px;padding:1px 7px;">.3ds .cia</span>
+              </div>
+              <a href="https://lime3ds.github.io" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#3a6fd8;color:#fff;border:2px solid #1a3a8a;border-radius:6px;padding:7px 14px;font-family:'Press Start 2P',monospace;font-size:7px;text-decoration:none;box-shadow:3px 3px 0 #0a1a50;">⬇ DESCARGAR</a>
             </div>
-            <div class="ps2-step">
-              <span class="step-num">04</span>
-              <span class="step-txt">¡A jugar con gráficos mejorados en HD!</span>
+
+            <!-- RPCS3 - PS3 -->
+            <div style="background:#0a0a18;border:2px solid #2a2a5a;border-radius:10px;padding:1rem;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <span style="font-size:28px;">🔲</span>
+                <div>
+                  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#7a9fff;">RPCS3</div>
+                  <div style="font-family:'VT323',monospace;font-size:14px;color:#4a4a8a;">PlayStation 3 · 2006</div>
+                </div>
+                <span style="margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:#f8c000;background:rgba(248,192,0,0.1);border:1px solid rgba(248,192,0,0.3);border-radius:4px;padding:3px 7px;">BUENO</span>
+              </div>
+              <p style="font-family:'VT323',monospace;font-size:15px;color:#6666aa;line-height:1.6;margin-bottom:10px;">Emulador de PS3 más avanzado. Requiere PC potente. Uncharted, The Last of Us, Demon's Souls... Necesita firmware oficial de Sony.</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Windows</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Linux</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#aaaaaa;border:1px solid #333;border-radius:3px;padding:1px 7px;">.pkg .iso</span>
+              </div>
+              <a href="https://rpcs3.net" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#3a6fd8;color:#fff;border:2px solid #1a3a8a;border-radius:6px;padding:7px 14px;font-family:'Press Start 2P',monospace;font-size:7px;text-decoration:none;box-shadow:3px 3px 0 #0a1a50;">⬇ DESCARGAR</a>
             </div>
+
+            <!-- YUZU/RYUJINX - Switch -->
+            <div style="background:#0a0a18;border:2px solid #2a2a5a;border-radius:10px;padding:1rem;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <span style="font-size:28px;">🟥</span>
+                <div>
+                  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#ff8888;">RYUJINX</div>
+                  <div style="font-family:'VT323',monospace;font-size:14px;color:#4a4a8a;">Nintendo Switch · 2017</div>
+                </div>
+                <span style="margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:#ff6666;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:4px;padding:3px 7px;">EXPERIMENTAL</span>
+              </div>
+              <p style="font-family:'VT323',monospace;font-size:15px;color:#6666aa;line-height:1.6;margin-bottom:10px;">Emulador de Switch más activo tras el cierre de Yuzu. Zona legal gris — Nintendo ha demandado a emuladores de Switch activamente. Úsalo con precaución.</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Windows</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Linux</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#aaaaaa;border:1px solid #333;border-radius:3px;padding:1px 7px;">.nsp .xci</span>
+              </div>
+              <a href="https://ryujinx.app" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#8a2a2a;color:#fff;border:2px solid #5a0a0a;border-radius:6px;padding:7px 14px;font-family:'Press Start 2P',monospace;font-size:7px;text-decoration:none;box-shadow:3px 3px 0 #3a0000;">⚠ VER SITIO</a>
+            </div>
+
+            <!-- XEMU - Xbox -->
+            <div style="background:#0a0a18;border:2px solid #2a2a5a;border-radius:10px;padding:1rem;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <span style="font-size:28px;">🟩</span>
+                <div>
+                  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#7a9fff;">XEMU</div>
+                  <div style="font-family:'VT323',monospace;font-size:14px;color:#4a4a8a;">Xbox Original · 2001</div>
+                </div>
+                <span style="margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:#f8c000;background:rgba(248,192,0,0.1);border:1px solid rgba(248,192,0,0.3);border-radius:4px;padding:3px 7px;">BUENO</span>
+              </div>
+              <p style="font-family:'VT323',monospace;font-size:15px;color:#6666aa;line-height:1.6;margin-bottom:10px;">El mejor emulador de Xbox original. Halo, Fable, Ninja Gaiden... Requiere BIOS original del hardware. Código abierto y en desarrollo activo.</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Windows</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Mac</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Linux</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#aaaaaa;border:1px solid #333;border-radius:3px;padding:1px 7px;">.iso .xiso</span>
+              </div>
+              <a href="https://xemu.app" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#3a6fd8;color:#fff;border:2px solid #1a3a8a;border-radius:6px;padding:7px 14px;font-family:'Press Start 2P',monospace;font-size:7px;text-decoration:none;box-shadow:3px 3px 0 #0a1a50;">⬇ DESCARGAR</a>
+            </div>
+
+            <!-- PPSSPP - PSP Desktop -->
+            <div style="background:#0a0a18;border:2px solid #2a2a5a;border-radius:10px;padding:1rem;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <span style="font-size:28px;">🔷</span>
+                <div>
+                  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#7a9fff;">PPSSPP</div>
+                  <div style="font-family:'VT323',monospace;font-size:14px;color:#4a4a8a;">PSP · Desktop / Móvil</div>
+                </div>
+                <span style="margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:#00cc00;background:rgba(0,204,0,0.1);border:1px solid rgba(0,204,0,0.3);border-radius:4px;padding:3px 7px;">EXCELENTE</span>
+              </div>
+              <p style="font-family:'VT323',monospace;font-size:15px;color:#6666aa;line-height:1.6;margin-bottom:10px;">La versión de escritorio de PPSSPP va mucho mejor que la versión web. También disponible para Android e iOS. Crisis Core, God of War, GTA Liberty City...</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Windows</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">Android</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#7a9fff;border:1px solid #2a2a6a;border-radius:3px;padding:1px 7px;">iOS</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a1a3a;color:#aaaaaa;border:1px solid #333;border-radius:3px;padding:1px 7px;">.iso .cso</span>
+              </div>
+              <a href="https://ppsspp.org" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#3a6fd8;color:#fff;border:2px solid #1a3a8a;border-radius:6px;padding:7px 14px;font-family:'Press Start 2P',monospace;font-size:7px;text-decoration:none;box-shadow:3px 3px 0 #0a1a50;">⬇ DESCARGAR</a>
+            </div>
+
+            <!-- RETROARCH - Todo en uno -->
+            <div style="background:#0a0a18;border:2px solid #3a5a2a;border-radius:10px;padding:1rem;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+                <span style="font-size:28px;">🎮</span>
+                <div>
+                  <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#80cc60;">RETROARCH</div>
+                  <div style="font-family:'VT323',monospace;font-size:14px;color:#4a6a3a;">TODO EN UNO · 30+ consolas</div>
+                </div>
+                <span style="margin-left:auto;font-family:'Press Start 2P',monospace;font-size:6px;color:#00cc00;background:rgba(0,204,0,0.1);border:1px solid rgba(0,204,0,0.3);border-radius:4px;padding:3px 7px;">⭐ RECOMENDADO</span>
+              </div>
+              <p style="font-family:'VT323',monospace;font-size:15px;color:#6666aa;line-height:1.6;margin-bottom:10px;">La navaja suiza de la emulación. Un solo programa para más de 30 consolas. NES, SNES, GBA, PS1, PS2, N64, Dreamcast y muchas más. Interfaz unificada y muy configurable.</p>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a2a1a;color:#80cc60;border:1px solid #2a4a2a;border-radius:3px;padding:1px 7px;">Windows</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a2a1a;color:#80cc60;border:1px solid #2a4a2a;border-radius:3px;padding:1px 7px;">Mac</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a2a1a;color:#80cc60;border:1px solid #2a4a2a;border-radius:3px;padding:1px 7px;">Linux</span>
+                <span style="font-family:'VT323',monospace;font-size:12px;background:#1a2a1a;color:#80cc60;border:1px solid #2a4a2a;border-radius:3px;padding:1px 7px;">Android</span>
+              </div>
+              <a href="https://retroarch.com" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#2a6a1a;color:#fff;border:2px solid #1a4a0a;border-radius:6px;padding:7px 14px;font-family:'Press Start 2P',monospace;font-size:7px;text-decoration:none;box-shadow:3px 3px 0 #0a2a00;">⬇ DESCARGAR</a>
+            </div>
+
           </div>
-          <a href="https://pcsx2.net" target="_blank" class="ps2-download-btn">
-            ⬇ DESCARGAR PCSX2 (GRATIS)
-          </a>
-          <p class="ps2-req">
-            Requisitos mínimos: Windows 10/11 · CPU Intel/AMD 4 núcleos · GPU con soporte DirectX 11 · 8 GB RAM
-          </p>
+
+          <!-- LEGAL SUMMARY -->
+          <div style="background:rgba(0,200,255,0.05);border:2px solid rgba(0,200,255,0.15);border-radius:8px;padding:1rem;">
+            <div style="font-family:'Press Start 2P',monospace;font-size:7px;color:#00c8ff;margin-bottom:8px;">📋 RESUMEN LEGAL</div>
+            <p style="font-family:'VT323',monospace;font-size:15px;color:#6688aa;line-height:1.8;">
+              Todos los emuladores de esta lista son <strong style="color:#00c8ff;">open source y gratuitos</strong>. Descargarlos e instalarlos es perfectamente legal en España y la UE. La legalidad de las ROMs depende de si posees el juego original — consúlta la sección "Consigue tus ROMs" para fuentes legales. RetroPlay no aloja ni distribuye ningún archivo de juego.
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
