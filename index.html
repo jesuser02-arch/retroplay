@@ -932,8 +932,8 @@
         ★ BIENVENIDO AL MUNDO DE LOS VIDEOJUEGOS RETRO ★ &nbsp;&nbsp;
         CARGA TU ROM Y EMPIEZA A JUGAR &nbsp;&nbsp;
         ¡UN NUEVO RIVAL APARECE! &nbsp;&nbsp;
-        NES · SNES · GBA · GBC · N64 · PS1 · MEGA DRIVE · ARCADE · ATARI &nbsp;&nbsp;
-        ★ RETROPLAY WEB EMULATOR v2.0 ★ &nbsp;&nbsp;
+        NES · SNES · GBA · GBC · NDS · N64 · PS1 · MEGA DRIVE · NEO GEO · PC ENGINE · ARCADE · PSP &nbsp;&nbsp;
+        ★ RETROPLAY WEB EMULATOR v3.0 ★ &nbsp;&nbsp;
         POWERED BY EMULATORJS &nbsp;&nbsp;
       </span>
     </div>
@@ -945,7 +945,7 @@
       <span class="title-main">RETRO<span>PLAY</span></span>
     </div>
     <p class="hero-desc">
-      12 consolas clásicas + PSP. Sin instalaciones.<br/>
+      15 sistemas clásicos incluyendo DS, Neo Geo y PC Engine.<br/>
       Solo trae tu ROM y a jugar.
     </p>
     <span class="press-start-blink">▼ PULSA PARA EMPEZAR ▼</span>
@@ -1005,6 +1005,16 @@
             </div>
             <div class="console-btn" onclick="selectConsole(this,'arcade','ARCADE')">
               <span class="cicon">🕹️</span><span class="cname">ARCADE</span><span class="cyear">MAME</span>
+            </div>
+            <div class="console-btn experimental" onclick="selectConsoleWarning(this,'nds','NINTENDO DS','Nintendo DS','⚠ NINTENDO DS — EXPERIMENTAL','El emulador de Nintendo DS funciona en el navegador con estas limitaciones:','Las ROMs pesan entre 32 MB y 512 MB','Algunos juegos con doble pantalla pueden verse extraños','Recomendado: Chrome o Edge en PC','Formato: .nds o .zip')">
+              <span class="cicon">🟫</span><span class="cname">NINTENDO DS</span><span class="cyear">2004</span>
+              <span class="exp-tag">BETA</span>
+            </div>
+            <div class="console-btn" onclick="selectConsole(this,'neoGeo','NEO GEO')">
+              <span class="cicon">🔶</span><span class="cname">NEO GEO</span><span class="cyear">1990</span>
+            </div>
+            <div class="console-btn" onclick="selectConsole(this,'pce','PC ENGINE')">
+              <span class="cicon">🟤</span><span class="cname">PC ENGINE</span><span class="cyear">1987</span>
             </div>
             <div class="console-btn experimental" onclick="selectConsolePSP(this)">
               <span class="cicon">🔷</span><span class="cname">PSP</span><span class="cyear">2004</span>
@@ -1182,7 +1192,7 @@
     <span class="footer-logo">★ RETROPLAY WEB EMULATOR v2.0 ★</span>
     <div class="footer-sub">
       Powered by <a href="https://emulatorjs.org" target="_blank">EmulatorJS</a> &nbsp;·&nbsp;
-      NES · SNES · GBA · GB · GBC · N64 · PS1 · MEGA DRIVE · MASTER SYS · GAME GEAR · ATARI · ARCADE · PSP (BETA)
+      NES · SNES · GBA · GB · GBC · NDS · N64 · PS1 · MEGA DRIVE · MASTER SYS · GAME GEAR · ATARI · NEO GEO · PC ENGINE · ARCADE · PSP (BETA)
     </div>
     <div class="footer-balls">
       <div class="mini-ball"></div>
@@ -1192,6 +1202,24 @@
       <div class="mini-ball"></div>
     </div>
   </footer>
+
+  <!-- GENERIC WARNING MODAL -->
+  <div class="modal-overlay" id="generic-modal">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <div class="modal-hdr-title" id="warn-title">⚠ MODO EXPERIMENTAL</div>
+      </div>
+      <div class="modal-body">
+        <p id="warn-desc"></p>
+        <ul id="warn-list"></ul>
+        <p>Formato recomendado: <strong>.zip</strong> o ROM nativa</p>
+        <div class="modal-btns">
+          <button class="modal-btn-ok" onclick="confirmWarning()">▶ ENTENDIDO, CONTINUAR</button>
+          <button class="modal-btn-cancel" onclick="closeWarningModal()">✕ CANCELAR</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- PSP WARNING MODAL -->
   <div class="modal-overlay" id="psp-modal">
@@ -1222,6 +1250,10 @@
     let currentConsoleName = 'NES';
     let emulatorLoaded = false;
     let pendingPSPBtn = null;
+    let pendingWarningBtn = null;
+    let pendingWarningCore = null;
+    let pendingWarningName = null;
+    let pendingWarningAccept = null;
 
     function selectConsole(el, core, name) {
       document.querySelectorAll('.console-btn').forEach(b => b.classList.remove('active'));
@@ -1230,7 +1262,7 @@
       currentConsoleName = name;
       document.getElementById('selected-name').textContent = name;
       document.getElementById('status-console').textContent = name;
-      document.getElementById('rom-file').accept = '.nes,.sfc,.smc,.gba,.gb,.gbc,.z64,.n64,.bin,.iso,.cso,.md,.rom,.zip';
+      document.getElementById('rom-file').accept = '.nes,.sfc,.smc,.gba,.gb,.gbc,.z64,.n64,.bin,.iso,.cso,.nds,.pce,.md,.rom,.zip';
       resetEmulator();
     }
 
@@ -1238,6 +1270,41 @@
       pendingPSPBtn = el;
       document.getElementById('psp-modal').classList.add('open');
     }
+
+    function selectConsoleWarning(el, core, name, displayName, title, desc, w1, w2, w3, w4) {
+      pendingWarningBtn = el;
+      pendingWarningCore = core;
+      pendingWarningName = name;
+      pendingWarningAccept = core === 'nds' ? '.nds,.zip' : '.zip,.rom';
+
+      document.getElementById('warn-title').textContent = title;
+      document.getElementById('warn-desc').textContent = desc;
+      const list = document.getElementById('warn-list');
+      list.innerHTML = [w1,w2,w3,w4].filter(Boolean).map(w => `<li>${w}</li>`).join('');
+      document.getElementById('warn-display-name').textContent = displayName;
+      document.getElementById('generic-modal').classList.add('open');
+    }
+
+    function confirmWarning() {
+      document.getElementById('generic-modal').classList.remove('open');
+      document.querySelectorAll('.console-btn').forEach(b => b.classList.remove('active'));
+      if (pendingWarningBtn) pendingWarningBtn.classList.add('active');
+      currentCore = pendingWarningCore;
+      currentConsoleName = pendingWarningName;
+      document.getElementById('selected-name').textContent = pendingWarningName + ' (BETA)';
+      document.getElementById('status-console').textContent = pendingWarningName + ' BETA';
+      document.getElementById('rom-file').accept = pendingWarningAccept;
+      resetEmulator();
+    }
+
+    function closeWarningModal() {
+      document.getElementById('generic-modal').classList.remove('open');
+      pendingWarningBtn = null;
+    }
+
+    document.getElementById('generic-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeWarningModal();
+    });
 
     function confirmPSP() {
       document.getElementById('psp-modal').classList.remove('open');
