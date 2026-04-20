@@ -1366,6 +1366,195 @@
       border-top: 1px solid #1a1a3a;
     }
 
+    /* ── ROM SOURCES ── */
+    .roms-section { margin-bottom: 2rem; }
+
+    .sources-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .src-tab {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.1vw, 7px);
+      padding: 7px 14px;
+      border-radius: 6px 6px 0 0;
+      border: 3px solid var(--dark);
+      border-bottom: none;
+      background: var(--cream2);
+      color: var(--brown);
+      cursor: pointer;
+      transition: all 0.15s;
+      box-shadow: 2px -2px 0 var(--dark);
+    }
+    .src-tab:hover { background: var(--cream); }
+    .src-tab.active { background: var(--gold); color: var(--dark); }
+
+    .src-panel { display: none; }
+    .src-panel.active { display: block; }
+
+    .sources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .source-card {
+      background: var(--white);
+      border: 3px solid var(--brown);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 4px 4px 0 var(--brown);
+      transition: all 0.15s;
+    }
+    body.dark .source-card { background: var(--white); border-color: #3a3050; box-shadow: 4px 4px 0 #3a3050; }
+    .source-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--brown); }
+    body.dark .source-card:hover { box-shadow: 6px 6px 0 #5a50aa; border-color: #5a50aa; }
+
+    .source-card-hdr {
+      padding: 10px 14px 8px;
+      border-bottom: 2px solid var(--cream2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    body.dark .source-card-hdr { border-color: #2a2535; }
+    .source-icon { font-size: 22px; flex-shrink: 0; }
+    .source-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.1vw, 7px);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .source-legal {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-left: auto;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .legal-ok { background: #e0f0d0; color: #2a6a2a; border: 1px solid #4caf50; }
+    .legal-warn { background: #fff0d0; color: #8a6000; border: 1px solid #c9972a; }
+    body.dark .legal-ok { background: #1a2a1a; color: #60cc60; }
+    body.dark .legal-warn { background: #2a1a00; color: #c8a040; }
+
+    .source-body { padding: 10px 14px; }
+    .source-desc {
+      font-family: 'VT323', monospace;
+      font-size: clamp(14px, 2.2vw, 15px);
+      color: var(--brown);
+      line-height: 1.6;
+      margin-bottom: 10px;
+      display: block;
+    }
+    body.dark .source-desc { color: #9988cc; }
+    .source-consoles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .src-console-pill {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      background: var(--cream2);
+      color: var(--brown);
+      border-radius: 3px;
+      padding: 1px 6px;
+      border: 1px solid var(--brown);
+    }
+    body.dark .src-console-pill { background: #2a2535; color: #9988cc; border-color: #3a3050; }
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.1vw, 7px);
+      color: var(--white);
+      background: var(--red);
+      border: 2px solid var(--dark);
+      border-radius: 6px;
+      padding: 6px 12px;
+      text-decoration: none;
+      box-shadow: 2px 2px 0 var(--dark);
+      transition: all 0.1s;
+    }
+    .source-link:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--dark); background: var(--red-light); }
+
+    /* homebrew list */
+    .homebrew-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .hb-card {
+      background: var(--white);
+      border: 3px solid var(--green);
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: 3px 3px 0 #2a7a2a;
+      transition: all 0.15s;
+    }
+    body.dark .hb-card { background: #1a2a1a; border-color: #3a6a3a; box-shadow: 3px 3px 0 #1a3a1a; }
+    .hb-card:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #2a7a2a; }
+    .hb-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.1vw, 7px);
+      color: var(--text);
+      display: block;
+      margin-bottom: 5px;
+      line-height: 1.6;
+    }
+    body.dark .hb-title { color: #c0f0c0; }
+    .hb-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .hb-console {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: var(--white);
+      background: var(--green);
+      border-radius: 3px;
+      padding: 1px 6px;
+    }
+    .hb-free {
+      font-family: 'VT323', monospace;
+      font-size: 12px;
+      color: #2a7a2a;
+    }
+    body.dark .hb-free { color: #60cc60; }
+    .hb-desc {
+      font-family: 'VT323', monospace;
+      font-size: clamp(13px, 2vw, 14px);
+      color: var(--gray);
+      display: block;
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .hb-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      color: var(--white);
+      background: var(--green);
+      border: 2px solid #2a7a2a;
+      border-radius: 5px;
+      padding: 5px 10px;
+      text-decoration: none;
+      box-shadow: 2px 2px 0 #1a5a1a;
+      transition: all 0.1s;
+    }
+    .hb-link:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 #1a5a1a; }
+
     /* ── ANIMATIONS ── */
     .fade-up { opacity: 0; transform: translateY(14px); animation: fup 0.45s ease forwards; }
     @keyframes fup { to { opacity:1; transform:translateY(0); } }
@@ -1387,9 +1576,390 @@
     @media (max-width: 340px) {
       .consoles-grid { grid-template-columns: repeat(3, 1fr); }
     }
+
+    /* ── SPLASH SCREEN — ESTILO POKÉMON ── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Phase 1: black with white flash */
+    .splash-phase {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .splash-phase.show { opacity: 1; }
+
+    /* Opening flash like Game Boy power on */
+    #sp-flash {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+    }
+    #sp-flash.on { opacity: 1; }
+
+    /* Phase 1 — Professor Oak style intro */
+    #sp-oak {
+      background: #000;
+      padding: 2rem;
+      text-align: center;
+    }
+    .sp-textbox {
+      background: #f8f4e8;
+      border: 4px solid #1a1410;
+      border-radius: 10px;
+      box-shadow: 5px 5px 0 #1a1410;
+      padding: 1.25rem 1.5rem;
+      max-width: 480px;
+      width: 90vw;
+      min-height: 80px;
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    .sp-text {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(8px, 1.8vw, 11px);
+      color: #1a1410;
+      line-height: 2;
+      text-align: left;
+      min-height: 2.5em;
+    }
+    .sp-cursor {
+      display: inline-block;
+      width: 8px; height: 14px;
+      background: #1a1410;
+      vertical-align: middle;
+      animation: cur-blink 0.6s step-start infinite;
+      margin-left: 2px;
+    }
+    @keyframes cur-blink { 0%,100%{opacity:1;} 50%{opacity:0;} }
+
+    .sp-arrow {
+      position: absolute;
+      bottom: 10px; right: 14px;
+      font-size: 12px;
+      color: #1a1410;
+      animation: arr-bounce 0.5s ease-in-out infinite alternate;
+      display: none;
+    }
+    .sp-arrow.show { display: block; }
+    @keyframes arr-bounce { from{transform:translateY(0);} to{transform:translateY(4px);} }
+
+    /* Pokemon-style sprite area */
+    .sp-sprite-area {
+      width: 120px; height: 120px;
+      margin: 0 auto 1rem;
+      position: relative;
+    }
+    .sp-sprite-inner {
+      width: 100%; height: 100%;
+      animation: sprite-enter 0.5s ease forwards;
+      opacity: 0;
+    }
+    @keyframes sprite-enter {
+      0%{opacity:0;transform:translateY(20px);}
+      100%{opacity:1;transform:translateY(0);}
+    }
+
+    /* Phase 2 — Title screen */
+    #sp-title {
+      background: #1a3a8a;
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      inset: 0;
+    }
+    .sp-title-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 40px);
+    }
+    .sp-grass-top {
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 20px;
+      background: repeating-linear-gradient(90deg,#4aa840 0,#4aa840 20px,#5aba50 20px,#5aba50 40px);
+      border-bottom: 4px solid #2a7a28;
+    }
+    .sp-grass-bot {
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 20px;
+      background: repeating-linear-gradient(90deg,#4aa840 0,#4aa840 20px,#5aba50 20px,#5aba50 40px);
+      border-top: 4px solid #2a7a28;
+    }
+    .sp-version-tag {
+      position: absolute;
+      top: 32px; right: 20px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(7px,1.2vw,9px);
+      color: #f8c000;
+      background: #cc0000;
+      border: 2px solid #1a1410;
+      border-radius: 4px;
+      padding: 4px 10px;
+      box-shadow: 2px 2px 0 #1a1410;
+      letter-spacing: 1px;
+    }
+
+    .sp-logo-wrap {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    .sp-logo-sub {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(7px,1.3vw,9px);
+      color: #7aabff;
+      letter-spacing: 4px;
+      display: block;
+      margin-bottom: 10px;
+      animation: title-fade-in 0.5s ease forwards;
+    }
+    .sp-logo-main {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(28px,6vw,52px);
+      color: #f4c542;
+      text-shadow: 4px 4px 0 #c9972a, 8px 8px 0 rgba(0,0,0,0.3);
+      display: block;
+      animation: logo-drop 0.6s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+      letter-spacing: 2px;
+    }
+    .sp-logo-main span { color: #fff; }
+    @keyframes logo-drop {
+      0%{transform:translateY(-40px);opacity:0;}
+      100%{transform:translateY(0);opacity:1;}
+    }
+    @keyframes title-fade-in {
+      from{opacity:0;letter-spacing:8px;}
+      to{opacity:1;letter-spacing:4px;}
+    }
+
+    /* GBA sprite on title */
+    .sp-gba-title {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 1.5rem;
+      animation: gba-hover 3s ease-in-out infinite;
+      filter: drop-shadow(0 6px 20px rgba(244,197,66,0.4));
+    }
+    @keyframes gba-hover {
+      0%,100%{transform:translateY(0) rotate(-1deg);}
+      50%{transform:translateY(-10px) rotate(1deg);}
+    }
+
+    .sp-press-start {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(9px,1.8vw,13px);
+      color: #fff;
+      background: #cc0000;
+      border: 4px solid #1a1410;
+      border-radius: 8px;
+      padding: clamp(10px,2vw,14px) clamp(20px,4vw,32px);
+      cursor: pointer;
+      box-shadow: 5px 5px 0 #1a1410;
+      animation: btn-blink 1.2s ease-in-out infinite;
+      transition: all 0.1s;
+      position: relative;
+      z-index: 2;
+      letter-spacing: 1px;
+    }
+    .sp-press-start:hover { transform:translate(-2px,-2px); box-shadow:7px 7px 0 #1a1410; background:#ff4444; }
+    .sp-press-start:active { transform:translate(3px,3px); box-shadow:2px 2px 0 #1a1410; }
+    @keyframes btn-blink {
+      0%,100%{box-shadow:5px 5px 0 #1a1410;}
+      50%{box-shadow:5px 5px 0 #1a1410,0 0 24px rgba(204,0,0,0.6);}
+    }
+
+    .sp-copyright {
+      position: absolute;
+      bottom: 28px;
+      font-family: 'VT323', monospace;
+      font-size: 13px;
+      color: #4466aa;
+      z-index: 2;
+      letter-spacing: 1px;
+    }
+
+    /* GBA POWER-ON TRANSITION */
+    #gba-poweron {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      display: none;
+      background: #000;
+      align-items: center;
+      justify-content: center;
+    }
+    #gba-poweron.show { display: flex; }
+    .gba-poweron-screen {
+      width: min(480px, 90vw);
+      aspect-ratio: 3/2;
+      background: #000;
+      border: 6px solid #2a2030;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(152,184,112,0);
+      transition: box-shadow 0.3s;
+    }
+    .gba-poweron-screen.lit {
+      box-shadow: 0 0 60px rgba(152,184,112,0.8), 0 0 120px rgba(152,184,112,0.3);
+    }
+    .gba-screen-fill {
+      position: absolute;
+      inset: 0;
+      background: #98b870;
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .gba-screen-fill.open { transform: scaleY(1); }
+    .gba-screen-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s 0.4s;
+    }
+    .gba-screen-content.show { opacity: 1; }
+    .gba-poweron-text {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(10px,2.5vw,18px);
+      color: #306030;
+      text-align: center;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.2);
+    }
+    .gba-scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent 0px, transparent 3px,
+        rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* Page hidden until splash done */
+    body.splash-active > *:not(#splash):not(#gba-poweron) {
+      visibility: hidden;
+    }
   </style>
 </head>
-<body>
+<body class="splash-active">
+
+  <!-- GBA POWER-ON OVERLAY -->
+  <div id="gba-poweron">
+    <div class="gba-poweron-screen" id="gba-screen">
+      <div class="gba-screen-fill" id="gba-fill"></div>
+      <div class="gba-screen-content" id="gba-content">
+        <div class="gba-poweron-text">
+          RETROPLAY<br/>
+          <span style="font-size:0.6em;color:#508050;">v3.0</span>
+        </div>
+      </div>
+      <div class="gba-scanlines"></div>
+    </div>
+  </div>
+
+  <!-- SPLASH SCREEN -->
+  <div id="splash">
+    <div id="sp-flash"></div>
+
+    <!-- PHASE 1: Pokémon Oak-style intro -->
+    <div class="splash-phase show" id="sp-oak">
+      <div class="sp-sprite-area">
+        <div class="sp-sprite-inner" id="sp-sprite">
+          <!-- Pixel art pokeball -->
+          <svg viewBox="0 0 80 80" width="120" height="120" xmlns="http://www.w3.org/2000/svg" style="image-rendering:pixelated;">
+            <circle cx="40" cy="40" r="36" fill="#cc0000" stroke="#1a1410" stroke-width="4"/>
+            <rect x="4" y="36" width="72" height="8" fill="#1a1410"/>
+            <circle cx="40" cy="40" r="12" fill="#f8f4e8" stroke="#1a1410" stroke-width="4"/>
+            <circle cx="40" cy="40" r="6" fill="#fff" stroke="#1a1410" stroke-width="2"/>
+            <!-- top white dots -->
+            <circle cx="24" cy="24" r="4" fill="rgba(255,255,255,0.3)"/>
+            <circle cx="32" cy="16" r="3" fill="rgba(255,255,255,0.2)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="sp-textbox" id="sp-textbox">
+        <div class="sp-text" id="sp-text"></div>
+        <span class="sp-cursor" id="sp-cursor" style="display:none;"></span>
+        <div class="sp-arrow" id="sp-arrow">▼</div>
+      </div>
+    </div>
+
+    <!-- PHASE 2: Title screen -->
+    <div class="splash-phase" id="sp-title">
+      <div class="sp-title-bg"></div>
+      <div class="sp-grass-top"></div>
+      <div class="sp-grass-bot"></div>
+      <div class="sp-version-tag">v3.0</div>
+
+      <div class="sp-logo-wrap">
+        <span class="sp-logo-sub">✦ EMULADOR WEB RETRO ✦</span>
+        <span class="sp-logo-main">RETRO<span>PLAY</span></span>
+      </div>
+
+      <div class="sp-gba-title">
+        <svg viewBox="0 0 260 165" width="clamp(200px,45vw,280px)" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="18" width="244" height="130" rx="26" fill="#504858"/>
+          <rect x="8" y="18" width="244" height="130" rx="26" fill="none" stroke="#2a2030" stroke-width="4"/>
+          <rect x="66" y="28" width="128" height="90" rx="5" fill="#1e1828"/>
+          <rect x="72" y="34" width="116" height="78" rx="3" fill="#98b870"/>
+          <rect x="72" y="34" width="116" height="78" rx="3" fill="none" stroke="#000" stroke-width="1" opacity="0.1"/>
+          <rect x="72" y="34" width="116" height="26" rx="3" fill="rgba(255,255,255,0.06)"/>
+          <!-- scanlines -->
+          <line x1="72" y1="38" x2="188" y2="38" stroke="#000" stroke-width="0.5" opacity="0.1"/>
+          <line x1="72" y1="42" x2="188" y2="42" stroke="#000" stroke-width="0.5" opacity="0.1"/>
+          <line x1="72" y1="46" x2="188" y2="46" stroke="#000" stroke-width="0.5" opacity="0.1"/>
+          <text x="130" y="67" font-family="monospace" font-size="9" fill="#306030" text-anchor="middle" font-weight="bold">RETROPLAY</text>
+          <text x="130" y="80" font-family="monospace" font-size="6" fill="#508050" text-anchor="middle">PRESS START</text>
+          <text x="130" y="93" font-family="monospace" font-size="5" fill="#408040" text-anchor="middle">© 2025</text>
+          <circle cx="58" cy="32" r="4" fill="#00cc00">
+            <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <rect x="8" y="14" width="36" height="10" rx="5" fill="#3a3048"/>
+          <rect x="216" y="14" width="36" height="10" rx="5" fill="#3a3048"/>
+          <rect x="24" y="70" width="32" height="10" rx="3" fill="#2a2030"/>
+          <rect x="30" y="62" width="10" height="32" rx="3" fill="#2a2030"/>
+          <rect x="33" y="73" width="4" height="4" fill="#1a1020"/>
+          <circle cx="220" cy="66" r="8" fill="#cc0000"/>
+          <circle cx="206" cy="76" r="8" fill="#c9972a"/>
+          <text x="220" y="70" font-family="monospace" font-size="7" fill="#fff" text-anchor="middle">A</text>
+          <text x="206" y="80" font-family="monospace" font-size="7" fill="#fff" text-anchor="middle">B</text>
+          <rect x="108" y="122" width="16" height="7" rx="3" fill="#2a2030"/>
+          <rect x="132" y="122" width="16" height="7" rx="3" fill="#2a2030"/>
+        </svg>
+      </div>
+
+      <button class="sp-press-start" onclick="startGBAPowerOn()">▶ PRESS START</button>
+      <div class="sp-copyright">© 2025 RETROPLAY · POWERED BY EMULATORJS</div>
+    </div>
+  </div>
 
   <header>
     <div class="header-top">
@@ -2314,6 +2884,332 @@
       </div>
     </div>
 
+    <!-- CONSIGUE TUS ROMS -->
+    <div class="roms-section fade-up">
+      <div class="section-label">CONSIGUE TUS ROMs</div>
+      <div class="panel">
+        <div class="panel-hdr">
+          <span class="panel-hdr-title">// FUENTES LEGALES DE ROMs</span>
+          <div class="panel-dots">
+            <div class="pdot pdot-r"></div>
+            <div class="pdot pdot-y"></div>
+            <div class="pdot pdot-g"></div>
+          </div>
+        </div>
+        <div class="panel-body">
+
+          <!-- TABS -->
+          <div class="sources-tabs">
+            <div class="src-tab active" onclick="switchTab('archive')">📦 ARCHIVE.ORG</div>
+            <div class="src-tab" onclick="switchTab('homebrew')">🎮 HOMEBREW LIBRE</div>
+            <div class="src-tab" onclick="switchTab('sites')">🌐 OTROS SITIOS</div>
+          </div>
+
+          <!-- TAB: ARCHIVE.ORG -->
+          <div class="src-panel active" id="tab-archive">
+            <div class="sources-grid">
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🟥</span>
+                  <span class="source-name">NES / FAMICOM<br/>ROMS</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Miles de ROMs de NES preservadas digitalmente por Internet Archive bajo doctrina de preservación cultural.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">NES</span>
+                    <span class="src-console-pill">FAMICOM</span>
+                  </div>
+                  <a href="https://archive.org/details/ni-roms" target="_blank" class="source-link">⬇ VER COLECCIÓN</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🟪</span>
+                  <span class="source-name">SNES<br/>ROMS</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Colección completa de ROMs de Super Nintendo en Archive.org. Incluye juegos japoneses y europeos.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">SNES</span>
+                    <span class="src-console-pill">SFC</span>
+                  </div>
+                  <a href="https://archive.org/details/snes-roms" target="_blank" class="source-link">⬇ VER COLECCIÓN</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🟦</span>
+                  <span class="source-name">GBA<br/>ROMS</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Archivo completo de Game Boy Advance. Incluye los juegos de Pokémon y toda la biblioteca oficial.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">GBA</span>
+                    <span class="src-console-pill">GB</span>
+                    <span class="src-console-pill">GBC</span>
+                  </div>
+                  <a href="https://archive.org/details/gba-roms" target="_blank" class="source-link">⬇ VER COLECCIÓN</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🔵</span>
+                  <span class="source-name">SEGA MEGA DRIVE<br/>ROMS</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Biblioteca completa de Mega Drive / Genesis. Sonic, Streets of Rage, Golden Axe y mucho más.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">MEGA DRIVE</span>
+                    <span class="src-console-pill">GENESIS</span>
+                  </div>
+                  <a href="https://archive.org/details/segamd-roms" target="_blank" class="source-link">⬇ VER COLECCIÓN</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🟧</span>
+                  <span class="source-name">ATARI 2600<br/>ROMS</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Colección completa de Atari 2600. Muchos juegos ya son de dominio público por antigüedad.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">ATARI 2600</span>
+                  </div>
+                  <a href="https://archive.org/details/atari_2600_library" target="_blank" class="source-link">⬇ VER COLECCIÓN</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🕹️</span>
+                  <span class="source-name">ARCADE MAME<br/>ROMS</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Miles de ROMs de arcade preservadas. Incluye clásicos de Konami, Capcom, SNK y Taito.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">ARCADE</span>
+                    <span class="src-console-pill">MAME</span>
+                    <span class="src-console-pill">NEO GEO</span>
+                  </div>
+                  <a href="https://archive.org/details/mame-merged" target="_blank" class="source-link">⬇ VER COLECCIÓN</a>
+                </div>
+              </div>
+
+            </div>
+            <div class="games-note">
+              Archive.org es una biblioteca digital sin ánimo de lucro reconocida por la Biblioteca del Congreso de EE.UU. Sus colecciones de ROMs están protegidas bajo la doctrina de preservación digital. RetroPlay simplemente enlaza a sus colecciones — no aloja ningún archivo.
+            </div>
+          </div>
+
+          <!-- TAB: HOMEBREW -->
+          <div class="src-panel" id="tab-homebrew">
+            <div class="homebrew-list">
+
+              <div class="hb-card">
+                <span class="hb-title">PONG GBA</span>
+                <div class="hb-meta">
+                  <span class="hb-console">GBA</span>
+                  <span class="hb-free">✓ GRATIS</span>
+                </div>
+                <span class="hb-desc">Clásico Pong para GBA hecho por la comunidad. Perfecto para probar el emulador.</span>
+                <a href="https://pdroms.de/files/nintendo-gameboy-advance-gba/pong-v1-0" target="_blank" class="hb-link">⬇ DESCARGAR</a>
+              </div>
+
+              <div class="hb-card">
+                <span class="hb-title">SNAKE GBA</span>
+                <div class="hb-meta">
+                  <span class="hb-console">GBA</span>
+                  <span class="hb-free">✓ GRATIS</span>
+                </div>
+                <span class="hb-desc">El mítico Snake en Game Boy Advance. Código abierto y completamente libre.</span>
+                <a href="https://pdroms.de/files/nintendo-gameboy-advance-gba/snake" target="_blank" class="hb-link">⬇ DESCARGAR</a>
+              </div>
+
+              <div class="hb-card">
+                <span class="hb-title">SUPER MARIO BROS NES (ROMPATCH)</span>
+                <div class="hb-meta">
+                  <span class="hb-console">NES</span>
+                  <span class="hb-free">✓ GRATIS</span>
+                </div>
+                <span class="hb-desc">ROM hack de dominio público con niveles completamente nuevos creados por la comunidad.</span>
+                <a href="https://www.romhacking.net/hacks/1/" target="_blank" class="hb-link">⬇ DESCARGAR</a>
+              </div>
+
+              <div class="hb-card">
+                <span class="hb-title">BLADE BUSTER</span>
+                <div class="hb-meta">
+                  <span class="hb-console">NES</span>
+                  <span class="hb-free">✓ GRATIS</span>
+                </div>
+                <span class="hb-desc">Shoot'em up profesional para NES hecho en 2010. Calidad comercial, libre para siempre.</span>
+                <a href="https://pdroms.de/files/nintendo-nes-famicom/blade-buster" target="_blank" class="hb-link">⬇ DESCARGAR</a>
+              </div>
+
+              <div class="hb-card">
+                <span class="hb-title">UWOL: QUEST FOR MONEY</span>
+                <div class="hb-meta">
+                  <span class="hb-console">NES</span>
+                  <span class="hb-free">✓ GRATIS</span>
+                </div>
+                <span class="hb-desc">Plataformas retro de calidad creado por BeaglePuss Games. Código fuente abierto.</span>
+                <a href="https://pdroms.de/files/nintendo-nes-famicom/uwol-quest-for-money" target="_blank" class="hb-link">⬇ DESCARGAR</a>
+              </div>
+
+              <div class="hb-card">
+                <span class="hb-title">MAGIC FLOOR</span>
+                <div class="hb-meta">
+                  <span class="hb-console">GBA</span>
+                  <span class="hb-free">✓ GRATIS</span>
+                </div>
+                <span class="hb-desc">Puzzle game para GBA completamente libre con más de 50 niveles diseñados a mano.</span>
+                <a href="https://pdroms.de/files/nintendo-gameboy-advance-gba/magic-floor" target="_blank" class="hb-link">⬇ DESCARGAR</a>
+              </div>
+
+              <div class="hb-card">
+                <span class="hb-title">ITCH.IO HOMEBREW</span>
+                <div class="hb-meta">
+                  <span class="hb-console">VARIOS</span>
+                  <span class="hb-free">✓ GRATIS</span>
+                </div>
+                <span class="hb-desc">Cientos de juegos homebrew para GBA, NES y SNES en itch.io. Muchos gratuitos y descargables.</span>
+                <a href="https://itch.io/games/tag-gba" target="_blank" class="hb-link">⬇ VER EN ITCH.IO</a>
+              </div>
+
+              <div class="hb-card">
+                <span class="hb-title">PDROMS LIBRARY</span>
+                <div class="hb-meta">
+                  <span class="hb-console">TODOS</span>
+                  <span class="hb-free">✓ GRATIS</span>
+                </div>
+                <span class="hb-desc">La mayor biblioteca de homebrew retro del mundo. NES, SNES, GBA, Mega Drive y más.</span>
+                <a href="https://pdroms.de" target="_blank" class="hb-link">🌐 IR A PDROMS</a>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- TAB: OTROS SITIOS -->
+          <div class="src-panel" id="tab-sites">
+            <div class="sources-grid">
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🌐</span>
+                  <span class="source-name">ROMHACKING.NET</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">La mayor base de datos de ROM hacks y traducciones. Parches que modifican juegos originales. Completamente legal ya que no distribuye ROMs base.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">TODOS</span>
+                  </div>
+                  <a href="https://www.romhacking.net" target="_blank" class="source-link">🌐 VISITAR</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🎮</span>
+                  <span class="source-name">OPEN.ROM</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Repositorio de ROMs de dominio público y freeware. Solo incluye juegos cuyos autores han liberado explícitamente los derechos.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">NES</span>
+                    <span class="src-console-pill">SNES</span>
+                    <span class="src-console-pill">GBA</span>
+                  </div>
+                  <a href="https://archive.org/details/freeware-roms" target="_blank" class="source-link">🌐 VISITAR</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">📚</span>
+                  <span class="source-name">GBA TEMP<br/>HOMEBREW</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Foro y repositorio de homebrew para consolas Nintendo. La comunidad más activa de desarrollo retro amateur.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">GBA</span>
+                    <span class="src-console-pill">NDS</span>
+                    <span class="src-console-pill">N64</span>
+                  </div>
+                  <a href="https://gbatemp.net/categories/nintendo-ds-homebrew-and-hacks.32/" target="_blank" class="source-link">🌐 VISITAR</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🕹️</span>
+                  <span class="source-name">ITCH.IO<br/>GAME BOY</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Itch.io tiene cientos de juegos homebrew para Game Boy, GBA y NES. Muchos son gratuitos y de alta calidad.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">GB</span>
+                    <span class="src-console-pill">GBC</span>
+                    <span class="src-console-pill">GBA</span>
+                  </div>
+                  <a href="https://itch.io/games/tag-game-boy" target="_blank" class="source-link">🌐 VISITAR</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">⚠️</span>
+                  <span class="source-name">TUS PROPIOS<br/>CARTUCHOS</span>
+                  <span class="source-legal legal-warn">⚠ GRIS</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Si posees el cartucho físico original, extraer la ROM para uso personal es legal en muchos países bajo el derecho de copia privada. Requiere hardware específico de volcado.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">TODOS</span>
+                  </div>
+                  <a href="https://www.retrode.com" target="_blank" class="source-link">🌐 VER RETRODE</a>
+                </div>
+              </div>
+
+              <div class="source-card">
+                <div class="source-card-hdr">
+                  <span class="source-icon">🛒</span>
+                  <span class="source-name">GOG / STEAM<br/>RETRO</span>
+                  <span class="source-legal legal-ok">✓ LEGAL</span>
+                </div>
+                <div class="source-body">
+                  <span class="source-desc">Algunas tiendas legales venden ROMs de juegos retro con licencia. GOG tiene colecciones de clásicos de Atari, Sega y más.</span>
+                  <div class="source-consoles">
+                    <span class="src-console-pill">ATARI</span>
+                    <span class="src-console-pill">SEGA</span>
+                  </div>
+                  <a href="https://www.gog.com/games?genres=classics" target="_blank" class="source-link">🌐 VER EN GOG</a>
+                </div>
+              </div>
+
+            </div>
+            <div class="games-note">
+              RetroPlay solo enlaza a sitios externos. No aloja, distribuye ni facilita la descarga de ROMs con copyright activo. Cada usuario es responsable de cumplir la legislación de su país respecto a la copia privada de videojuegos.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
     <!-- AVISO LEGAL -->
     <div class="notice fade-up d5">
       <div class="notice-title">⚠ AVISO LEGAL</div>
@@ -2395,6 +3291,201 @@
     let pendingWarningCore = null;
     let pendingWarningName = null;
     let pendingWarningAccept = null;
+
+    // ── SPLASH SCREEN — POKÉMON STYLE ──
+    (function() {
+      if (sessionStorage.getItem('rp-splash-done')) {
+        document.getElementById('splash').style.display = 'none';
+        document.body.classList.remove('splash-active');
+        return;
+      }
+
+      // ── TYPEWRITER ENGINE ──
+      const messages = [
+        "Bienvenido al mundo de los videojuegos retro.",
+        "Este mundo está lleno de consolas clásicas esperando ser exploradas.",
+        "¡Tu aventura retro está a punto de comenzar!",
+        "Este es RetroPlay."
+      ];
+
+      let msgIndex = 0;
+      let charIndex = 0;
+      let typeInterval = null;
+      let isTyping = false;
+      let isWaiting = false;
+
+      const textEl   = document.getElementById('sp-text');
+      const arrowEl  = document.getElementById('sp-arrow');
+      const cursorEl = document.getElementById('sp-cursor');
+      const spriteEl = document.getElementById('sp-sprite');
+      const oakEl    = document.getElementById('sp-oak');
+
+      // Show sprite
+      setTimeout(() => {
+        spriteEl.style.opacity = '1';
+        spriteEl.style.animation = 'sprite-enter 0.5s ease forwards';
+      }, 300);
+
+      function typeMessage(text, onDone) {
+        isTyping = true;
+        isWaiting = false;
+        textEl.textContent = '';
+        cursorEl.style.display = 'none';
+        arrowEl.classList.remove('show');
+        charIndex = 0;
+
+        typeInterval = setInterval(() => {
+          textEl.textContent += text[charIndex];
+          charIndex++;
+          if (charIndex >= text.length) {
+            clearInterval(typeInterval);
+            typeInterval = null;
+            isTyping = false;
+            cursorEl.style.display = 'inline-block';
+            onDone && onDone();
+          }
+        }, 40);
+      }
+
+      function skipToEnd() {
+        if (!isTyping || !typeInterval) return;
+        clearInterval(typeInterval);
+        typeInterval = null;
+        isTyping = false;
+        textEl.textContent = messages[msgIndex - 1];
+        cursorEl.style.display = 'inline-block';
+        // trigger onDone manually
+        afterMessage();
+      }
+
+      function afterMessage() {
+        const isLast = msgIndex >= messages.length;
+        if (isLast) {
+          setTimeout(showTitleScreen, 600);
+        } else {
+          isWaiting = true;
+          arrowEl.classList.add('show');
+        }
+      }
+
+      function runMessage() {
+        if (msgIndex >= messages.length) { showTitleScreen(); return; }
+        const text = messages[msgIndex++];
+        typeMessage(text, afterMessage);
+      }
+
+      function advance() {
+        if (isTyping) {
+          skipToEnd();
+          return;
+        }
+        if (isWaiting) {
+          isWaiting = false;
+          arrowEl.classList.remove('show');
+          cursorEl.style.display = 'none';
+          setTimeout(runMessage, 100);
+        }
+      }
+
+      // Click, touch and keyboard all advance
+      oakEl.addEventListener('click', advance);
+      oakEl.addEventListener('touchend', function(e) { e.preventDefault(); advance(); });
+      oakEl.style.cursor = 'pointer';
+      document.addEventListener('keydown', function(e) {
+        if (['Enter','Space','ArrowDown','z','Z'].includes(e.key)) advance();
+      });
+
+      function showTitleScreen() {
+        oakEl.style.transition = 'opacity 0.5s';
+        oakEl.style.opacity = '0';
+        setTimeout(() => {
+          oakEl.classList.remove('show');
+          document.getElementById('sp-title').classList.add('show');
+        }, 500);
+      }
+
+      // Start first message
+      setTimeout(runMessage, 800);
+
+      // ── START SOUND ──
+      function playStartSound() {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const notes = [
+            { freq: 262, t: 0 },
+            { freq: 330, t: 0.1 },
+            { freq: 392, t: 0.2 },
+            { freq: 523, t: 0.3 },
+            { freq: 659, t: 0.35 },
+            { freq: 784, t: 0.4 },
+          ];
+          notes.forEach(({ freq, t }) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.type = 'square';
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0, ctx.currentTime + t);
+            gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + t + 0.01);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.18);
+            osc.start(ctx.currentTime + t);
+            osc.stop(ctx.currentTime + t + 0.2);
+          });
+        } catch(e) {}
+      }
+
+      // ── GBA POWER-ON ──
+      window.startGBAPowerOn = function() {
+        playStartSound();
+        sessionStorage.setItem('rp-splash-done', '1');
+
+        const poweron = document.getElementById('gba-poweron');
+        const screen  = document.getElementById('gba-screen');
+        const fill    = document.getElementById('gba-fill');
+        const content = document.getElementById('gba-content');
+        const splash  = document.getElementById('splash');
+
+        splash.style.transition = 'opacity 0.3s';
+        splash.style.opacity = '0';
+
+        setTimeout(() => {
+          splash.style.display = 'none';
+          poweron.classList.add('show');
+
+          setTimeout(() => {
+            screen.classList.add('lit');
+            fill.classList.add('open');
+          }, 100);
+
+          setTimeout(() => {
+            content.classList.add('show');
+          }, 550);
+
+          setTimeout(() => {
+            screen.style.transition = 'all 0.5s cubic-bezier(0.4,0,0.2,1)';
+            screen.style.width = '100vw';
+            screen.style.height = '100vh';
+            screen.style.borderRadius = '0';
+            screen.style.border = 'none';
+          }, 1100);
+
+          setTimeout(() => {
+            poweron.style.display = 'none';
+            document.body.classList.remove('splash-active');
+          }, 1650);
+
+        }, 300);
+      };
+    })();
+    function switchTab(tab) {
+      document.querySelectorAll('.src-tab').forEach((t,i) => {
+        const tabs = ['archive','homebrew','sites'];
+        t.classList.toggle('active', tabs[i] === tab);
+      });
+      document.querySelectorAll('.src-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+    }
 
     // ── NETPLAY (WebRTC P2P) ──
     let netplayMode = null;
