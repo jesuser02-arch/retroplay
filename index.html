@@ -1174,6 +1174,198 @@
       line-height: 1.6;
     }
 
+    /* ── NETPLAY ── */
+    .netplay-panel {
+      background: #0a0a20;
+      border: 4px solid var(--dark);
+      border-radius: 12px;
+      box-shadow: 6px 6px 0 var(--dark);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+    .netplay-hdr {
+      background: #050510;
+      padding: 10px 16px;
+      border-bottom: 3px solid #2a2a5a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .netplay-hdr-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.2vw, 8px);
+      color: #00f0f0;
+      letter-spacing: 1px;
+    }
+    .netplay-badge {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      color: #00f0f0;
+      background: rgba(0,240,240,0.1);
+      border: 1px solid rgba(0,240,240,0.3);
+      border-radius: 100px;
+      padding: 3px 8px;
+      animation: blink-txt 2s step-start infinite;
+    }
+    .netplay-body { padding: 1.5rem; }
+    .netplay-modes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 480px) { .netplay-modes { grid-template-columns: 1fr; } }
+    .netplay-mode-btn {
+      background: #111128;
+      border: 3px solid #2a2a5a;
+      border-radius: 10px;
+      padding: 1rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+      box-shadow: 3px 3px 0 #050510;
+    }
+    .netplay-mode-btn:hover { border-color: #00f0f0; box-shadow: 4px 4px 0 #00a0a0; transform: translate(-1px,-1px); }
+    .netplay-mode-btn.active { border-color: #00f0f0; background: rgba(0,240,240,0.08); box-shadow: 0 0 16px rgba(0,240,240,0.2); }
+    .nm-icon { font-size: 28px; display: block; margin-bottom: 8px; }
+    .nm-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(7px, 1.3vw, 9px);
+      color: #00f0f0;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .nm-desc {
+      font-family: 'VT323', monospace;
+      font-size: clamp(13px, 2vw, 15px);
+      color: #6666aa;
+      display: block;
+    }
+
+    .netplay-form { display: none; }
+    .netplay-form.show { display: block; }
+
+    .netplay-input-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .netplay-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.1vw, 7px);
+      color: #8888bb;
+      white-space: nowrap;
+    }
+    .netplay-input {
+      flex: 1;
+      min-width: 140px;
+      background: #111128;
+      border: 2px solid #2a2a5a;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(8px, 1.5vw, 10px);
+      color: #00f0f0;
+      letter-spacing: 3px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .netplay-input:focus { border-color: #00f0f0; }
+    .netplay-input::placeholder { color: #2a2a5a; letter-spacing: 1px; }
+
+    .netplay-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(6px, 1.2vw, 8px);
+      border-radius: 7px;
+      border: 3px solid #050510;
+      cursor: pointer;
+      padding: 8px 16px;
+      box-shadow: 3px 3px 0 #050510;
+      transition: all 0.1s;
+      white-space: nowrap;
+    }
+    .netplay-btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #050510; }
+    .netplay-btn:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 #050510; }
+    .netplay-btn-host { background: #00a0a0; color: #000; }
+    .netplay-btn-join { background: #0050f0; color: #fff; }
+    .netplay-btn-copy { background: #2a2a5a; color: #00f0f0; }
+    .netplay-btn-disc { background: #a00000; color: #fff; }
+
+    .netplay-room-box {
+      display: none;
+      background: #050518;
+      border: 2px solid #00f0f0;
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 12px;
+      box-shadow: 0 0 20px rgba(0,240,240,0.15);
+    }
+    .netplay-room-box.show { display: block; }
+
+    .room-code-display {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(18px, 4vw, 28px);
+      color: #00f0f0;
+      text-align: center;
+      letter-spacing: 8px;
+      padding: 12px;
+      background: #0a0a28;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 12px rgba(0,240,240,0.5);
+    }
+
+    .netplay-status {
+      font-family: 'VT323', monospace;
+      font-size: clamp(14px, 2.5vw, 17px);
+      text-align: center;
+      padding: 8px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .netplay-status.waiting { color: #f8c000; background: rgba(248,192,0,0.08); border: 1px solid rgba(248,192,0,0.2); }
+    .netplay-status.connected { color: #00c000; background: rgba(0,192,0,0.08); border: 1px solid rgba(0,192,0,0.2); }
+    .netplay-status.error { color: #f86060; background: rgba(248,96,96,0.08); border: 1px solid rgba(248,96,96,0.2); }
+
+    .netplay-players {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .netplay-player {
+      flex: 1;
+      min-width: 80px;
+      background: #111128;
+      border: 2px solid #2a2a5a;
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+    }
+    .netplay-player.online { border-color: #00c000; }
+    .netplay-player-icon { font-size: 18px; display: block; }
+    .netplay-player-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      color: #8888aa;
+      display: block;
+      margin-top: 4px;
+    }
+    .netplay-player.online .netplay-player-name { color: #00c000; }
+
+    .netplay-tip {
+      font-family: 'VT323', monospace;
+      font-size: clamp(13px, 2vw, 15px);
+      color: #444466;
+      line-height: 1.7;
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-top: 1px solid #1a1a3a;
+    }
+
     /* ── ANIMATIONS ── */
     .fade-up { opacity: 0; transform: translateY(14px); animation: fup 0.45s ease forwards; }
     @keyframes fup { to { opacity:1; transform:translateY(0); } }
@@ -1464,6 +1656,90 @@
             <div class="ctrl-item"><span class="key-badge">F4</span><span class="ctrl-name">Cargar estado</span></div>
             <div class="ctrl-item"><span class="key-badge">F8</span><span class="ctrl-name">Pantalla completa</span></div>
             <div class="ctrl-item"><span class="key-badge">🎮</span><span class="ctrl-name">Gamepad OK</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MULTIJUGADOR ONLINE -->
+    <div class="fade-up">
+      <div class="section-label">MULTIJUGADOR ONLINE</div>
+      <div class="netplay-panel">
+        <div class="netplay-hdr">
+          <span class="netplay-hdr-title">// NETPLAY — 2 JUGADORES VÍA WEBRTC</span>
+          <span class="netplay-badge">BETA</span>
+        </div>
+        <div class="netplay-body">
+
+          <div class="netplay-modes">
+            <div class="netplay-mode-btn" id="mode-host" onclick="selectNetplayMode('host')">
+              <span class="nm-icon">🏠</span>
+              <span class="nm-title">CREAR SALA</span>
+              <span class="nm-desc">Tú eres el anfitrión. Comparte el código con tu amigo.</span>
+            </div>
+            <div class="netplay-mode-btn" id="mode-join" onclick="selectNetplayMode('join')">
+              <span class="nm-icon">🔗</span>
+              <span class="nm-title">UNIRSE</span>
+              <span class="nm-desc">Introduce el código que te pasó tu amigo.</span>
+            </div>
+          </div>
+
+          <!-- FORM HOST -->
+          <div class="netplay-form" id="form-host">
+            <div class="netplay-input-row">
+              <span class="netplay-label">JUGADOR 1</span>
+              <input class="netplay-input" id="host-name" maxlength="10" placeholder="TU NOMBRE" style="letter-spacing:2px; text-transform:uppercase;"/>
+              <button class="netplay-btn netplay-btn-host" onclick="hostGame()">▶ CREAR SALA</button>
+            </div>
+            <div class="netplay-room-box" id="host-room-box">
+              <div class="room-code-display" id="host-room-code">------</div>
+              <div class="netplay-status waiting" id="host-status">Esperando al jugador 2...</div>
+              <div class="netplay-players">
+                <div class="netplay-player online" id="np-p1">
+                  <span class="netplay-player-icon">👾</span>
+                  <span class="netplay-player-name" id="np-p1-name">JUGADOR 1</span>
+                </div>
+                <div class="netplay-player" id="np-p2">
+                  <span class="netplay-player-icon">❓</span>
+                  <span class="netplay-player-name">ESPERANDO...</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="netplay-btn netplay-btn-copy" onclick="copyRoomCode()">📋 COPIAR CÓDIGO</button>
+                <button class="netplay-btn netplay-btn-disc" onclick="disconnectNetplay()">✕ DESCONECTAR</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- FORM JOIN -->
+          <div class="netplay-form" id="form-join">
+            <div class="netplay-input-row">
+              <span class="netplay-label">TU NOMBRE</span>
+              <input class="netplay-input" id="join-name" maxlength="10" placeholder="NOMBRE" style="letter-spacing:2px; text-transform:uppercase; max-width:160px;"/>
+            </div>
+            <div class="netplay-input-row">
+              <span class="netplay-label">CÓDIGO DE SALA</span>
+              <input class="netplay-input" id="join-code" maxlength="6" placeholder="XXXXXX" oninput="this.value=this.value.toUpperCase()"/>
+              <button class="netplay-btn netplay-btn-join" onclick="joinGame()">🔗 UNIRSE</button>
+            </div>
+            <div class="netplay-room-box" id="join-room-box">
+              <div class="netplay-status waiting" id="join-status">Conectando...</div>
+              <div class="netplay-players">
+                <div class="netplay-player" id="jp-p1">
+                  <span class="netplay-player-icon">👾</span>
+                  <span class="netplay-player-name" id="jp-p1-name">ANFITRIÓN</span>
+                </div>
+                <div class="netplay-player online" id="jp-p2">
+                  <span class="netplay-player-icon">🎮</span>
+                  <span class="netplay-player-name" id="jp-p2-name">TÚ</span>
+                </div>
+              </div>
+              <button class="netplay-btn netplay-btn-disc" onclick="disconnectNetplay()">✕ DESCONECTAR</button>
+            </div>
+          </div>
+
+          <div class="netplay-tip">
+            ⚠ Ambos jugadores necesitan cargar <strong style="color:#8888cc;">la misma ROM exacta</strong> · Mejor rendimiento en NES, SNES y GBA · Requiere buena conexión en ambos lados · Compatible con gamepad
           </div>
         </div>
       </div>
@@ -2120,6 +2396,204 @@
     let pendingWarningName = null;
     let pendingWarningAccept = null;
 
+    // ── NETPLAY (WebRTC P2P) ──
+    let netplayMode = null;
+    let peerConn = null;
+    let dataChannel = null;
+    let netplayActive = false;
+    const SIGNAL_SERVER = 'wss://signaling.emulatorjs.org';
+    let sigSocket = null;
+    let myRoomCode = null;
+
+    function genRoomCode() {
+      return Math.random().toString(36).substring(2,8).toUpperCase();
+    }
+
+    function selectNetplayMode(mode) {
+      netplayMode = mode;
+      document.getElementById('mode-host').classList.toggle('active', mode === 'host');
+      document.getElementById('mode-join').classList.toggle('active', mode === 'join');
+      document.getElementById('form-host').classList.toggle('show', mode === 'host');
+      document.getElementById('form-join').classList.toggle('show', mode === 'join');
+    }
+
+    function hostGame() {
+      if (!emulatorLoaded) { showToast('⚠ Carga un juego primero'); return; }
+      const name = (document.getElementById('host-name').value || 'P1').toUpperCase().substring(0,10);
+      myRoomCode = genRoomCode();
+      document.getElementById('host-room-code').textContent = myRoomCode;
+      document.getElementById('np-p1-name').textContent = name;
+      document.getElementById('host-room-box').classList.add('show');
+      document.getElementById('host-status').textContent = 'Esperando al jugador 2... Comparte el código';
+      document.getElementById('host-status').className = 'netplay-status waiting';
+      initWebRTCHost(myRoomCode, name);
+      showToast('🏠 Sala creada: ' + myRoomCode);
+    }
+
+    function joinGame() {
+      const code = document.getElementById('join-code').value.toUpperCase().trim();
+      const name = (document.getElementById('join-name').value || 'P2').toUpperCase().substring(0,10);
+      if (code.length < 4) { showToast('⚠ Introduce un código válido'); return; }
+      if (!emulatorLoaded) { showToast('⚠ Carga el mismo juego primero'); return; }
+      document.getElementById('jp-p2-name').textContent = name;
+      document.getElementById('join-room-box').classList.add('show');
+      document.getElementById('join-status').textContent = 'Conectando con ' + code + '...';
+      document.getElementById('join-status').className = 'netplay-status waiting';
+      initWebRTCJoin(code, name);
+    }
+
+    function initWebRTCHost(roomCode, playerName) {
+      try {
+        peerConn = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }] });
+        dataChannel = peerConn.createDataChannel('netplay', { ordered: false, maxRetransmits: 0 });
+        setupDataChannel(dataChannel);
+
+        peerConn.onicecandidate = e => {
+          if (e.candidate && sigSocket && sigSocket.readyState === WebSocket.OPEN) {
+            sigSocket.send(JSON.stringify({ type: 'ice', room: roomCode, candidate: e.candidate }));
+          }
+        };
+
+        peerConn.createOffer().then(offer => {
+          peerConn.setLocalDescription(offer);
+          connectSignaling(roomCode, playerName, 'host', offer);
+        });
+      } catch(e) {
+        // Fallback: use EmulatorJS built-in netplay if available
+        tryEJSNetplay('host', roomCode, playerName);
+      }
+    }
+
+    function initWebRTCJoin(roomCode, playerName) {
+      try {
+        peerConn = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }] });
+
+        peerConn.ondatachannel = e => {
+          dataChannel = e.channel;
+          setupDataChannel(dataChannel);
+        };
+
+        peerConn.onicecandidate = e => {
+          if (e.candidate && sigSocket && sigSocket.readyState === WebSocket.OPEN) {
+            sigSocket.send(JSON.stringify({ type: 'ice', room: roomCode, candidate: e.candidate }));
+          }
+        };
+
+        connectSignaling(roomCode, playerName, 'join', null);
+      } catch(e) {
+        tryEJSNetplay('join', roomCode, playerName);
+      }
+    }
+
+    function connectSignaling(roomCode, playerName, role, offer) {
+      try {
+        sigSocket = new WebSocket(SIGNAL_SERVER);
+        sigSocket.onopen = () => {
+          sigSocket.send(JSON.stringify({ type: role === 'host' ? 'host' : 'join', room: roomCode, name: playerName, offer }));
+        };
+        sigSocket.onmessage = async e => {
+          const msg = JSON.parse(e.data);
+          if (msg.type === 'offer' && role === 'join') {
+            await peerConn.setRemoteDescription(new RTCSessionDescription(msg.offer));
+            const answer = await peerConn.createAnswer();
+            await peerConn.setLocalDescription(answer);
+            sigSocket.send(JSON.stringify({ type: 'answer', room: roomCode, answer, name: playerName }));
+          } else if (msg.type === 'answer' && role === 'host') {
+            await peerConn.setRemoteDescription(new RTCSessionDescription(msg.answer));
+            document.getElementById('jp-p1-name') && (document.getElementById('jp-p1-name').textContent = msg.name || 'P2');
+            onPeerConnected(role, msg.name);
+          } else if (msg.type === 'ice') {
+            peerConn.addIceCandidate(new RTCIceCandidate(msg.candidate)).catch(()=>{});
+          } else if (msg.type === 'joined') {
+            onPeerConnected(role, msg.name);
+          }
+        };
+        sigSocket.onerror = () => tryEJSNetplay(role, roomCode, playerName);
+      } catch(e) {
+        tryEJSNetplay(role, roomCode, playerName);
+      }
+    }
+
+    function tryEJSNetplay(role, roomCode, playerName) {
+      // Fallback to EmulatorJS built-in netplay
+      if (window.EJS_emulator && window.EJS_emulator.netplay) {
+        try {
+          if (role === 'host') {
+            window.EJS_emulator.netplay.host(roomCode);
+          } else {
+            window.EJS_emulator.netplay.join(roomCode);
+          }
+          onPeerConnected(role, playerName);
+          return;
+        } catch(e) {}
+      }
+      // Final fallback: show manual instructions
+      const statusEl = document.getElementById(role === 'host' ? 'host-status' : 'join-status');
+      if (statusEl) {
+        statusEl.textContent = 'Usa el botón NETPLAY dentro del emulador (menú de EmulatorJS)';
+        statusEl.className = 'netplay-status waiting';
+      }
+      showToast('ℹ Usa el menú del emulador para netplay');
+    }
+
+    function setupDataChannel(channel) {
+      channel.onopen = () => {
+        netplayActive = true;
+        showToast('🟢 Conexión establecida');
+      };
+      channel.onclose = () => {
+        netplayActive = false;
+        showToast('🔴 Conexión cerrada');
+      };
+      channel.onmessage = e => {
+        // Forward input data to emulator if possible
+        if (window.EJS_emulator && window.EJS_emulator.netplay) {
+          try { window.EJS_emulator.netplay.receive(e.data); } catch(err) {}
+        }
+      };
+    }
+
+    function onPeerConnected(role, peerName) {
+      netplayActive = true;
+      if (role === 'host') {
+        document.getElementById('host-status').textContent = '🟢 Conectado con ' + (peerName || 'J2') + ' — ¡A jugar!';
+        document.getElementById('host-status').className = 'netplay-status connected';
+        document.getElementById('np-p2').classList.add('online');
+        document.getElementById('np-p2').querySelector('.netplay-player-name').textContent = peerName || 'J2';
+        document.getElementById('np-p2').querySelector('.netplay-player-icon').textContent = '🎮';
+      } else {
+        document.getElementById('join-status').textContent = '🟢 Conectado — ¡A jugar!';
+        document.getElementById('join-status').className = 'netplay-status connected';
+        document.getElementById('jp-p1').classList.add('online');
+      }
+      showToast('🟢 NETPLAY ACTIVO — ' + (peerName || 'Jugador') + ' conectado');
+      // Enable EJS netplay if available
+      if (window.EJS_emulator) {
+        try { window.EJS_emulator.netplay && window.EJS_emulator.netplay.start(); } catch(e) {}
+      }
+    }
+
+    function copyRoomCode() {
+      if (!myRoomCode) return;
+      navigator.clipboard.writeText(myRoomCode).then(() => showToast('📋 Código copiado: ' + myRoomCode));
+    }
+
+    function disconnectNetplay() {
+      if (dataChannel) { try { dataChannel.close(); } catch(e) {} dataChannel = null; }
+      if (peerConn) { try { peerConn.close(); } catch(e) {} peerConn = null; }
+      if (sigSocket) { try { sigSocket.close(); } catch(e) {} sigSocket = null; }
+      netplayActive = false;
+      myRoomCode = null;
+      document.getElementById('host-room-box').classList.remove('show');
+      document.getElementById('join-room-box').classList.remove('show');
+      document.getElementById('mode-host').classList.remove('active');
+      document.getElementById('mode-join').classList.remove('active');
+      document.getElementById('form-host').classList.remove('show');
+      document.getElementById('form-join').classList.remove('show');
+      netplayMode = null;
+      showToast('🔴 Netplay desconectado');
+    }
+
     // ── PWA INSTALL ──
     let deferredPrompt = null;
 
@@ -2412,9 +2886,11 @@
       window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
       window.EJS_startOnLoaded = true;
       window.EJS_saveManager = true;
+      window.EJS_netplayServer = 'wss://signaling.emulatorjs.org';
       window.EJS_Buttons = {
         saveState: true, loadState: true,
-        fullscreen: true, screenshot: true, cacheManager: true
+        fullscreen: true, screenshot: true,
+        cacheManager: true, netplay: true
       };
 
       const old = document.getElementById('ejs-loader');
