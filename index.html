@@ -3844,6 +3844,18 @@
       tc.classList.toggle('show', touchControlsVisible);
       btn?.classList.toggle('active', touchControlsVisible);
       localStorage.setItem('rp-touch', touchControlsVisible ? '1' : '0');
+
+      // También controlar el gamepad nativo de EJS si está activo
+      try {
+        if (window.EJS_emulator) {
+          const vgp = window.EJS_emulator.virtualGamepad;
+          if (vgp) {
+            touchControlsVisible ? vgp.show() : vgp.hide();
+          }
+        }
+      } catch(e) {}
+
+      showToast(touchControlsVisible ? '🎮 Controles táctiles activados' : '🎮 Controles táctiles ocultos');
     }
 
     // Show/hide speed bar with emulator
@@ -3856,7 +3868,9 @@
       if (turboBtn) { turboBtn.textContent = '⚡ x1'; turboBtn.classList.remove('active'); }
     }
 
-    // Auto-show touch controls on mobile / PWA
+    // Auto-show touch controls en móvil / PWA
+    // EJS_VirtualGamepad se activa automáticamente en móvil al cargar la ROM
+    // El panel nuestro es el fallback visible antes de cargar
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.matchMedia('(pointer: coarse)').matches;
     if (isMobile) {
       const saved = localStorage.getItem('rp-touch');
@@ -3869,6 +3883,14 @@
       touchControlsVisible = true;
       document.getElementById('touch-controls').classList.add('show');
       document.getElementById('tc-toggle-header')?.classList.add('active');
+    }
+
+    // En PWA standalone: forzar gamepad virtual siempre
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      touchControlsVisible = true;
+      document.getElementById('touch-controls').classList.add('show');
+      document.getElementById('tc-toggle-header')?.classList.add('active');
+      localStorage.setItem('rp-touch', '1');
     }
 
     // ── VISIT COUNTER ──
@@ -4143,6 +4165,15 @@
       window.EJS_startOnLoaded = true;
       window.EJS_saveManager = true;
       window.EJS_netplayServer = 'wss://signaling.emulatorjs.org';
+
+      // ── GAMEPAD TÁCTIL NATIVO DE EMULATORJS ──
+      // Activar en móvil o si el usuario tiene controles táctiles activados
+      const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.matchMedia('(pointer: coarse)').matches;
+      if (isMobileDevice || localStorage.getItem('rp-touch') === '1') {
+        window.EJS_VirtualGamepad = true;
+        window.EJS_VirtualGamepadStyle = 'opaque'; // 'transparent' o 'opaque'
+      }
+
       window.EJS_Buttons = {
         saveState: true, loadState: true,
         fullscreen: true, screenshot: true,
