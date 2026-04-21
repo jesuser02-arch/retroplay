@@ -1648,6 +1648,65 @@
     .theme-dot-gold  { background: #c8880a; }
     .theme-dot-green { background: #1a8a2a; }
 
+    .tc-turbo-btn {
+      background: rgba(244,197,66,0.2);
+      border: 2px solid rgba(244,197,66,0.5);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--gold);
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      letter-spacing: 1px;
+      transition: all 0.15s;
+    }
+    .tc-turbo-btn.active {
+      background: rgba(244,197,66,0.4);
+      border-color: var(--gold);
+      box-shadow: 0 0 12px rgba(244,197,66,0.4);
+    }
+
+    /* ── SPEED BUTTON (visible when game loaded) ── */
+    #speed-bar {
+      display: none;
+      position: fixed;
+      top: 70px;
+      right: 12px;
+      z-index: 400;
+      flex-direction: column;
+      gap: 6px;
+    }
+    #speed-bar.show { display: flex; }
+    .speed-btn {
+      background: rgba(10,10,24,0.85);
+      border: 2px solid rgba(127,119,221,0.4);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: #afa9ec;
+      cursor: pointer;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      transition: all 0.15s;
+      min-width: 52px;
+    }
+    .speed-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .speed-btn.active { background: rgba(244,197,66,0.15); border-color: var(--gold); color: var(--gold); box-shadow: 0 0 10px rgba(244,197,66,0.3); }
+
+    /* Fix touch-action for PWA — prevent scroll interfering with game buttons */
+    #touch-controls,
+    #touch-controls * {
+      touch-action: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    /* Allow scroll on toggle button */
+    .tc-toggle-btn { touch-action: auto; }
+
     /* ── TOUCH CONTROLS ── */
     #touch-controls {
       display: none;
@@ -2100,6 +2159,14 @@
 </head>
 <body class="splash-active">
 
+  <!-- SPEED BAR -->
+  <div id="speed-bar">
+    <div class="speed-btn active" id="spd-1" onclick="setSpeed(1)">x1</div>
+    <div class="speed-btn" id="spd-2" onclick="setSpeed(2)">x2</div>
+    <div class="speed-btn" id="spd-3" onclick="setSpeed(3)">x3</div>
+    <div class="speed-btn" id="spd-05" onclick="setSpeed(0.5)">½</div>
+  </div>
+
   <!-- GBA POWER-ON OVERLAY -->
   <div id="gba-poweron">
     <div class="gba-poweron-screen" id="gba-screen">
@@ -2194,26 +2261,37 @@
   <div id="touch-controls">
     <div class="tc-left">
       <div class="tc-dpad">
-        <div class="tc-dpad-btn tc-up"    id="tc-up"    ontouchstart="tcPress('up')"    ontouchend="tcRelease('up')">▲</div>
-        <div class="tc-dpad-btn tc-down"  id="tc-down"  ontouchstart="tcPress('down')"  ontouchend="tcRelease('down')">▼</div>
-        <div class="tc-dpad-btn tc-left"  id="tc-left"  ontouchstart="tcPress('left')"  ontouchend="tcRelease('left')">◀</div>
-        <div class="tc-dpad-btn tc-right" id="tc-right" ontouchstart="tcPress('right')" ontouchend="tcRelease('right')">▶</div>
+        <div class="tc-dpad-btn tc-up"    id="tc-up"
+          onpointerdown="tcPress('up')"    onpointerup="tcRelease('up')"   onpointercancel="tcRelease('up')">▲</div>
+        <div class="tc-dpad-btn tc-down"  id="tc-down"
+          onpointerdown="tcPress('down')"  onpointerup="tcRelease('down')" onpointercancel="tcRelease('down')">▼</div>
+        <div class="tc-dpad-btn tc-left"  id="tc-left"
+          onpointerdown="tcPress('left')"  onpointerup="tcRelease('left')" onpointercancel="tcRelease('left')">◀</div>
+        <div class="tc-dpad-btn tc-right" id="tc-right"
+          onpointerdown="tcPress('right')" onpointerup="tcRelease('right')" onpointercancel="tcRelease('right')">▶</div>
         <div class="tc-mid"></div>
       </div>
     </div>
     <div class="tc-center">
       <div class="tc-meta-btns">
-        <div class="tc-meta-btn" ontouchstart="tcPress('select')" ontouchend="tcRelease('select')">SELECT</div>
-        <div class="tc-meta-btn" ontouchstart="tcPress('start')"  ontouchend="tcRelease('start')">START</div>
+        <div class="tc-meta-btn"
+          onpointerdown="tcPress('select')" onpointerup="tcRelease('select')" onpointercancel="tcRelease('select')">SELECT</div>
+        <div class="tc-meta-btn"
+          onpointerdown="tcPress('start')"  onpointerup="tcRelease('start')"  onpointercancel="tcRelease('start')">START</div>
       </div>
+      <div class="tc-turbo-btn" id="tc-turbo" onpointerdown="toggleTurbo()">⚡ x1</div>
       <div class="tc-toggle-btn" onclick="toggleTouchControls()">✕ ocultar</div>
     </div>
     <div class="tc-right">
       <div class="tc-btns">
-        <div class="tc-btn tc-b" id="tc-b" ontouchstart="tcPress('b')" ontouchend="tcRelease('b')">B</div>
-        <div class="tc-btn tc-y" id="tc-y" ontouchstart="tcPress('y')" ontouchend="tcRelease('y')">Y</div>
-        <div class="tc-btn tc-a" id="tc-a" ontouchstart="tcPress('a')" ontouchend="tcRelease('a')">A</div>
-        <div class="tc-btn tc-x" id="tc-x" ontouchstart="tcPress('x')" ontouchend="tcRelease('x')">X</div>
+        <div class="tc-btn tc-b" id="tc-b"
+          onpointerdown="tcPress('b')" onpointerup="tcRelease('b')" onpointercancel="tcRelease('b')">B</div>
+        <div class="tc-btn tc-y" id="tc-y"
+          onpointerdown="tcPress('y')" onpointerup="tcRelease('y')" onpointercancel="tcRelease('y')">Y</div>
+        <div class="tc-btn tc-a" id="tc-a"
+          onpointerdown="tcPress('a')" onpointerup="tcRelease('a')" onpointercancel="tcRelease('a')">A</div>
+        <div class="tc-btn tc-x" id="tc-x"
+          onpointerdown="tcPress('x')" onpointerup="tcRelease('x')" onpointercancel="tcRelease('x')">X</div>
       </div>
     </div>
   </div>
@@ -3654,10 +3732,12 @@
       if (!d.classList.contains('theme-dot-' + savedTheme)) d.classList.remove('active');
     });
 
-    // ── TOUCH CONTROLS ──
+    // ── TOUCH CONTROLS (Pointer Events — works in PWA) ──
     let touchControlsVisible = false;
+    let currentSpeed = 1;
+    let turboSpeeds = [1, 2, 3];
+    let turboIndex = 0;
 
-    // Key mappings for touch buttons
     const TC_KEYS = {
       up:     { key: 'ArrowUp',    keyCode: 38 },
       down:   { key: 'ArrowDown',  keyCode: 40 },
@@ -3675,14 +3755,25 @@
       const k = TC_KEYS[btn];
       if (!k) return;
       const el = document.getElementById('tc-' + btn);
-      if (el) el.classList.add('pressed');
-      // Fire keydown on the game container
-      const target = document.getElementById('game') || document.body;
-      target.dispatchEvent(new KeyboardEvent('keydown', { key: k.key, keyCode: k.keyCode, bubbles: true, cancelable: true }));
-      // Also try EJS emulator directly
+      if (el) { el.classList.add('pressed'); el.setPointerCapture && event?.pointerId && el.setPointerCapture(event.pointerId); }
+
+      // Try EJS direct input first (most reliable)
+      let handled = false;
       try {
-        if (window.EJS_emulator) window.EJS_emulator.gameManager?.simulateInput?.(btn, true);
+        if (window.EJS_emulator) {
+          const gm = window.EJS_emulator.gameManager;
+          if (gm?.simulateInput) { gm.simulateInput(btn, true); handled = true; }
+          else if (gm?.input) { gm.input(btn, 1); handled = true; }
+        }
       } catch(e) {}
+
+      // Fallback: dispatch keyboard events to document and game canvas
+      if (!handled) {
+        const evOpts = { key: k.key, keyCode: k.keyCode, which: k.keyCode, code: k.key, bubbles: true, cancelable: true };
+        [document, document.getElementById('game'), document.querySelector('canvas')].forEach(t => {
+          try { t?.dispatchEvent(new KeyboardEvent('keydown', evOpts)); } catch(e) {}
+        });
+      }
     }
 
     function tcRelease(btn) {
@@ -3690,11 +3781,60 @@
       if (!k) return;
       const el = document.getElementById('tc-' + btn);
       if (el) el.classList.remove('pressed');
-      const target = document.getElementById('game') || document.body;
-      target.dispatchEvent(new KeyboardEvent('keyup', { key: k.key, keyCode: k.keyCode, bubbles: true, cancelable: true }));
+
+      let handled = false;
       try {
-        if (window.EJS_emulator) window.EJS_emulator.gameManager?.simulateInput?.(btn, false);
+        if (window.EJS_emulator) {
+          const gm = window.EJS_emulator.gameManager;
+          if (gm?.simulateInput) { gm.simulateInput(btn, false); handled = true; }
+          else if (gm?.input) { gm.input(btn, 0); handled = true; }
+        }
       } catch(e) {}
+
+      if (!handled) {
+        const evOpts = { key: k.key, keyCode: k.keyCode, which: k.keyCode, code: k.key, bubbles: true, cancelable: true };
+        [document, document.getElementById('game'), document.querySelector('canvas')].forEach(t => {
+          try { t?.dispatchEvent(new KeyboardEvent('keyup', evOpts)); } catch(e) {}
+        });
+      }
+    }
+
+    // ── SPEED / TURBO ──
+    function setSpeed(speed) {
+      currentSpeed = speed;
+      // Update speed bar buttons
+      ['1','2','3','05'].forEach(s => {
+        const btn = document.getElementById('spd-' + s);
+        if (btn) btn.classList.remove('active');
+      });
+      const activeId = speed === 0.5 ? 'spd-05' : 'spd-' + speed;
+      document.getElementById(activeId)?.classList.add('active');
+
+      // Apply to emulator
+      try {
+        if (window.EJS_emulator) {
+          if (typeof window.EJS_emulator.setGameSpeed === 'function') {
+            window.EJS_emulator.setGameSpeed(speed);
+          } else if (window.EJS_emulator.gameManager?.setSpeed) {
+            window.EJS_emulator.gameManager.setSpeed(speed);
+          } else if (window.EJS_emulator.Module?.setSpeed) {
+            window.EJS_emulator.Module.setSpeed(speed);
+          }
+        }
+      } catch(e) {}
+
+      showToast(speed === 0.5 ? '🐢 Velocidad ½x' : speed === 1 ? '▶ Velocidad normal' : '⚡ Velocidad ' + speed + 'x');
+    }
+
+    function toggleTurbo() {
+      turboIndex = (turboIndex + 1) % turboSpeeds.length;
+      const speed = turboSpeeds[turboIndex];
+      setSpeed(speed);
+      const btn = document.getElementById('tc-turbo');
+      if (btn) {
+        btn.textContent = '⚡ x' + speed;
+        btn.classList.toggle('active', speed !== 1);
+      }
     }
 
     function toggleTouchControls() {
@@ -3706,8 +3846,19 @@
       localStorage.setItem('rp-touch', touchControlsVisible ? '1' : '0');
     }
 
-    // Auto-show touch controls on mobile
-    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    // Show/hide speed bar with emulator
+    function showSpeedBar() { document.getElementById('speed-bar')?.classList.add('show'); }
+    function hideSpeedBar() {
+      document.getElementById('speed-bar')?.classList.remove('show');
+      setSpeed(1);
+      turboIndex = 0;
+      const turboBtn = document.getElementById('tc-turbo');
+      if (turboBtn) { turboBtn.textContent = '⚡ x1'; turboBtn.classList.remove('active'); }
+    }
+
+    // Auto-show touch controls on mobile / PWA
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.matchMedia('(pointer: coarse)').matches;
+    if (isMobile) {
       const saved = localStorage.getItem('rp-touch');
       if (saved !== '0') {
         touchControlsVisible = true;
@@ -3855,6 +4006,7 @@
         document.getElementById('gba-led').classList.remove('on');
         document.getElementById('status-file').textContent = 'en espera...';
         document.getElementById('save-panel').style.display = 'none';
+        hideSpeedBar();
         emulatorLoaded = false;
       }
     }
@@ -4012,6 +4164,7 @@
         setTimeout(() => {
           document.getElementById('save-panel').style.display = 'block';
           refreshSaveSlots();
+          showSpeedBar();
         }, 1500);
       };
       script.onerror = () => {
