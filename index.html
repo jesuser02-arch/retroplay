@@ -22,6 +22,11 @@
   <link rel="manifest" href="data:application/json,%7B%22name%22%3A%22RetroPlay%20Web%20Emulator%22%2C%22short_name%22%3A%22RetroPlay%22%2C%22description%22%3A%22Emulador%20web%20retro%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ede8d0%22%2C%22theme_color%22%3A%22%23cc0000%22%2C%22orientation%22%3A%22landscape%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%2520viewBox%3D%270%2520012%2520512%27%253E%253Crect%2520width%3D%27512%27%2520height%3D%27512%27%2520fill%3D%27%2523cc0000%27%2F%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D" />
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet" />
   <style>
+    /* ════════════════════════════════════════
+       VARIABLES GLOBALES — TEMA ROJO (defecto)
+       Todos los colores se definen aquí como
+       variables CSS para facilitar los temas.
+       ════════════════════════════════════════ */
     :root {
       --red:       #cc0000;
       --red-dark:  #990000;
@@ -53,8 +58,12 @@
       --ctrl-item-border: #d8d0b0;
     }
 
-    /* ── DARK MODE VARIABLES ── */
-    /* Dark mode always wins over any theme — use body.dark on all theme combos */
+    /* ════════════════════════════════════════
+       MODO OSCURO
+       Sobreescribe las variables de cualquier
+       tema. Usa mayor especificidad CSS para
+       garantizar que siempre gana.
+       ════════════════════════════════════════ */
     body.dark,
     body.dark.theme-red,
     body.dark.theme-blue,
@@ -96,6 +105,9 @@
       --gold: #80e898; --gold-dark: #40a850;
     }
 
+    /* ════════════════════════════════════════
+       RESET Y BASE
+       ════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
@@ -108,7 +120,7 @@
       transition: background 0.4s ease, color 0.4s ease;
     }
 
-    /* ── DARK MODE OVERRIDES ── */
+    /* Sobreescrituras específicas para elementos que no usan variables CSS */
     body.dark .panel { background: var(--panel-bg); }
     body.dark .panel-hdr { background: #0e0c18; }
     body.dark .console-btn { background: var(--white); border-color: #3a3050; box-shadow: 3px 3px 0 #3a3050; }
@@ -135,7 +147,7 @@
     body.dark .hero-desc { color: #9988cc; }
     body.dark .title-box { background: #0e0c20; }
 
-    /* ── DARK TOGGLE BUTTON ── */
+    /* Botón toggle modo oscuro/claro en el header */
     .dark-toggle {
       background: transparent;
       border: 2px solid rgba(255,255,255,0.25);
@@ -168,7 +180,10 @@
       z-index: 0;
     }
 
-    /* ── HEADER ── */
+    /* ════════════════════════════════════════
+       HEADER — barra superior roja con logo,
+       selector de temas, modo oscuro y marquee
+       ════════════════════════════════════════ */
     header {
       position: relative;
       z-index: 100;
@@ -264,7 +279,10 @@
     }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* ── HERO ── */
+    /* ════════════════════════════════════════
+       HERO — sección de bienvenida con título
+       y subtítulo principal
+       ════════════════════════════════════════ */
     .hero {
       position: relative;
       z-index: 10;
@@ -337,7 +355,10 @@
     }
     @keyframes blink-txt { 0%,100% { opacity:1; } 50% { opacity:0; } }
 
-    /* ── GRASS DIVIDER ── */
+    /* ════════════════════════════════════════
+       DIVISOR DE HIERBA — separador visual
+       estilo mapa de Pokémon
+       ════════════════════════════════════════ */
     .grass-divider {
       height: 22px;
       background: repeating-linear-gradient(90deg, #5aba50 0px, #5aba50 20px, #4aa840 20px, #4aa840 40px);
@@ -347,7 +368,9 @@
       z-index: 5;
     }
 
-    /* ── MAIN ── */
+    /* ════════════════════════════════════════
+       CONTENEDOR PRINCIPAL
+       ════════════════════════════════════════ */
     .main {
       position: relative;
       z-index: 10;
@@ -356,7 +379,10 @@
       padding: 2.5rem 1.25rem;
     }
 
-    /* ── SECTION LABEL ── */
+    /* ════════════════════════════════════════
+       ETIQUETAS DE SECCIÓN — botones rojos
+       con triángulo que preceden cada bloque
+       ════════════════════════════════════════ */
     .section-label {
       font-family: 'Press Start 2P', monospace;
       font-size: clamp(7px, 1.3vw, 9px);
@@ -374,7 +400,11 @@
     }
     .section-label::before { content: '▶'; font-size: 7px; }
 
-    /* ── PANEL ── */
+    /* ════════════════════════════════════════
+       PANEL — tarjeta con borde grueso estilo
+       carta de Pokémon. Usado para consolas,
+       controles y partidas guardadas.
+       ════════════════════════════════════════ */
     .panel {
       background: var(--panel-bg);
       border: 4px solid var(--dark);
@@ -405,7 +435,10 @@
 
     .panel-body { padding: 1.25rem; }
 
-    /* ── CONSOLE GRID ── */
+    /* ════════════════════════════════════════
+       GRID DE CONSOLAS — botones seleccionables
+       para elegir el sistema a emular
+       ════════════════════════════════════════ */
     .consoles-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -448,7 +481,11 @@
       display: block;
     }
 
-    /* ── GBA FRAME ── */
+    /* ════════════════════════════════════════
+       MARCO GBA — imitación visual de una
+       Game Boy Advance SP con pantalla,
+       LED, botones y efecto scanlines
+       ════════════════════════════════════════ */
     .gba-frame {
       background: #504858;
       border: 4px solid var(--dark);
@@ -628,7 +665,10 @@
       box-shadow: 0 2px 0 rgba(0,0,0,0.3);
     }
 
-    /* ── ROM LOADER ── */
+    /* ════════════════════════════════════════
+       CARGADOR DE ROM — input de archivo y
+       botón de inicio del juego
+       ════════════════════════════════════════ */
     .rom-panel {
       background: var(--cream);
       border: 3px solid var(--brown);
@@ -682,7 +722,10 @@
     .load-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--dark); }
     .load-btn:disabled { background: var(--gray); box-shadow: 2px 2px 0 var(--brown); cursor: not-allowed; transform: none; }
 
-    /* ── CONTROLS ── */
+    /* ════════════════════════════════════════
+       MAPA DE CONTROLES — tabla de teclas
+       del teclado asignadas al emulador
+       ════════════════════════════════════════ */
     .controls-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -715,7 +758,10 @@
       color: var(--brown);
     }
 
-    /* ── EXPERIMENTAL BADGE ── */
+    /* ════════════════════════════════════════
+       BADGE EXPERIMENTAL — etiqueta BETA
+       sobre los botones de consolas inestables
+       ════════════════════════════════════════ */
     .console-btn.experimental { border-color: #c9972a; }
     .console-btn.experimental .exp-tag {
       display: block;
@@ -734,7 +780,10 @@
       color: var(--white);
     }
 
-    /* ── PSP WARNING MODAL ── */
+    /* ════════════════════════════════════════
+       MODALES DE AVISO — aparecen al seleccionar
+       consolas experimentales (PSP, DS)
+       ════════════════════════════════════════ */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -811,7 +860,11 @@
     }
     .modal-btn-cancel:hover { transform: translate(-1px,-1px); }
 
-    /* ── PS2 SECTION ── */
+    /* ════════════════════════════════════════
+       EMULADORES DE ESCRITORIO — sección con
+       PCSX2, Dolphin, RPCS3 y más. Para consolas
+       que no son viables en el navegador.
+       ════════════════════════════════════════ */
     .ps2-panel {
       background: #1a1a2e;
       border: 4px solid var(--dark);
@@ -931,7 +984,9 @@
       line-height: 1.7;
     }
 
-    /* ── NOTICE ── */
+    /* ════════════════════════════════════════
+       AVISO LEGAL — caja informativa amarilla
+       ════════════════════════════════════════ */
     .notice {
       background: #fff8e0;
       border: 3px solid var(--gold-dark);
@@ -953,7 +1008,10 @@
       line-height: 1.7;
     }
 
-    /* ── FOOTER ── */
+    /* ════════════════════════════════════════
+       FOOTER — pie de página oscuro con logo,
+       lista de consolas y contador de visitas
+       ════════════════════════════════════════ */
     footer {
       position: relative;
       z-index: 10;
@@ -994,7 +1052,12 @@
       background: #333;
     }
 
-    /* ── FEATURED GAMES ── */
+    /* ════════════════════════════════════════
+       JUEGOS DESTACADOS — CSS PRESERVADO
+       Sección eliminada temporalmente.
+       Reactivar añadiendo el HTML de la
+       sección de carátulas pixel art.
+       ════════════════════════════════════════ */
     .games-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -1083,7 +1146,11 @@
       border: 2px solid var(--ctrl-item-border);
     }
 
-    /* ── PWA INSTALL BANNER ── */
+    /* ════════════════════════════════════════
+       PWA — banner de instalación como app
+       nativa. Aparece automáticamente cuando
+       el navegador detecta que es instalable.
+       ════════════════════════════════════════ */
     .pwa-banner {
       display: none;
       background: var(--blue-dark);
@@ -1135,7 +1202,10 @@
       line-height: 1;
     }
 
-    /* ── SAVE STATES ── */
+    /* ════════════════════════════════════════
+       PARTIDAS GUARDADAS — panel de 3 slots
+       persistentes por juego usando IndexedDB
+       ════════════════════════════════════════ */
     .save-slots {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -1194,7 +1264,10 @@
       line-height: 1.6;
     }
 
-    /* ── NETPLAY ── */
+    /* ════════════════════════════════════════
+       MULTIJUGADOR ONLINE — panel WebRTC P2P
+       para jugar con otra persona en red
+       ════════════════════════════════════════ */
     .netplay-panel {
       background: #0a0a20;
       border: 4px solid var(--dark);
@@ -1386,7 +1459,10 @@
       border-top: 1px solid #1a1a3a;
     }
 
-    /* ── ROM SOURCES ── */
+    /* ════════════════════════════════════════
+       FUENTES DE ROMs — sección con pestañas
+       para Archive.org, homebrew y otros sitios
+       ════════════════════════════════════════ */
     .roms-section { margin-bottom: 2rem; }
 
     .sources-tabs {
@@ -1575,7 +1651,10 @@
     }
     .hb-link:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 #1a5a1a; }
 
-    /* ── ANIMATIONS ── */
+    /* ════════════════════════════════════════
+       ANIMACIONES GENERALES — fade-up con
+       delays escalonados para la carga inicial
+       ════════════════════════════════════════ */
     .fade-up { opacity: 0; transform: translateY(14px); animation: fup 0.45s ease forwards; }
     @keyframes fup { to { opacity:1; transform:translateY(0); } }
     .d1 { animation-delay: 0.05s; }
@@ -1584,7 +1663,9 @@
     .d4 { animation-delay: 0.35s; }
     .d5 { animation-delay: 0.45s; }
 
-    /* ── RESPONSIVE ── */
+    /* ════════════════════════════════════════
+       RESPONSIVE — breakpoints para móvil
+       ════════════════════════════════════════ */
     @media (max-width: 480px) {
       .gba-frame { padding: 12px 12px 22px; border-radius: 10px 10px 28px 28px; }
       .consoles-grid { grid-template-columns: repeat(4, 1fr); }
@@ -1593,7 +1674,12 @@
       .load-btn { width: 100%; text-align: center; }
       .header-pills { display: none; }
     }
-    /* ── THEMES ── */
+    /* ════════════════════════════════════════
+       TEMAS DE COLOR
+       Pokémon Rojo / Azul / Oro / Verde
+       Cada tema sobreescribe las variables del
+       :root con su propia paleta de colores.
+       ════════════════════════════════════════ */
     body.theme-red {
       --red: #cc0000; --red-dark: #990000; --red-light: #ff4444;
       --gold: #f4c542; --gold-dark: #c9972a;
@@ -1627,7 +1713,10 @@
       --screen-bg: #70c870; --screen-dark: #1a5020;
     }
 
-    /* ── THEME SWITCHER ── */
+    /* ════════════════════════════════════════
+       SELECTOR DE TEMAS — puntos de colores
+       en el header
+       ════════════════════════════════════════ */
     .theme-switcher {
       display: flex;
       gap: 6px;
@@ -1668,7 +1757,11 @@
       box-shadow: 0 0 12px rgba(244,197,66,0.4);
     }
 
-    /* ── SPEED BUTTON (visible when game loaded) ── */
+    /* ════════════════════════════════════════
+       BARRA DE VELOCIDAD — botones flotantes
+       x½ x1 x2 x3 para turbo. Aparece solo
+       cuando hay un juego cargado.
+       ════════════════════════════════════════ */
     #speed-bar {
       display: none;
       position: fixed;
@@ -1696,7 +1789,7 @@
     .speed-btn:hover { border-color: var(--gold); color: var(--gold); }
     .speed-btn.active { background: rgba(244,197,66,0.15); border-color: var(--gold); color: var(--gold); box-shadow: 0 0 10px rgba(244,197,66,0.3); }
 
-    /* Fix touch-action for PWA — prevent scroll interfering with game buttons */
+    /* Fix: touch-action none en PWA para que el scroll no interfiera con los botones */
     #touch-controls,
     #touch-controls * {
       touch-action: none;
@@ -1707,7 +1800,10 @@
     /* Allow scroll on toggle button */
     .tc-toggle-btn { touch-action: auto; }
 
-    /* ── TOUCH CONTROLS ── */
+    /* ════════════════════════════════════════
+       CONTROLES TÁCTILES — gamepad virtual
+       superpuesto sobre el emulador en móvil
+       ════════════════════════════════════════ */
     #touch-controls {
       display: none;
       position: fixed;
@@ -1808,7 +1904,10 @@
       cursor: pointer;
     }
 
-    /* ── VISIT COUNTER ── */
+    /* ════════════════════════════════════════
+       CONTADOR DE VISITAS — display LED verde
+       en el footer. Cuenta por sesión única.
+       ════════════════════════════════════════ */
     .visit-counter {
       display: inline-flex;
       align-items: center;
@@ -1843,7 +1942,7 @@
       animation: led-blink 2s ease-in-out infinite;
     }
 
-    /* ── TOUCH CONTROLS TOGGLE IN HEADER ── */
+    /* Botón de activar/ocultar controles táctiles en el header */
     .tc-header-btn {
       background: transparent;
       border: 2px solid rgba(255,255,255,0.25);
@@ -1859,13 +1958,17 @@
     .tc-header-btn:hover { border-color: var(--gold); color: var(--gold); }
     .tc-header-btn.active { background: rgba(255,255,255,0.15); border-color: var(--gold); color: var(--gold); }
 
-    /* ── THEME DARK OVERRIDES handled above in dark mode section ── */
+    /* Temas + modo oscuro: gestionado arriba en la sección de dark mode */
 
     @media (max-width: 340px) {
       .consoles-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* ── SPLASH SCREEN — ESTILO POKÉMON ── */
+    /* ════════════════════════════════════════
+       PANTALLA DE INICIO — intro estilo Pokémon
+       con typewriter, sprite y pantalla de título.
+       Se omite si ya se visitó en esta sesión.
+       ════════════════════════════════════════ */
     #splash {
       position: fixed;
       inset: 0;
@@ -2159,7 +2262,14 @@
 </head>
 <body class="splash-active">
 
-  <!-- SPEED BAR -->
+
+  <!-- ═══════════════════════════════════════════════
+       OVERLAYS FIJOS — se posicionan sobre la página
+       con position:fixed. Orden: speed bar, GBA power-on,
+       splash screen, touch controls.
+       ═══════════════════════════════════════════════ -->
+
+  <!-- SPEED BAR — barra flotante de velocidad x½/x1/x2/x3 -->
   <div id="speed-bar">
     <div class="speed-btn active" id="spd-1" onclick="setSpeed(1)">x1</div>
     <div class="speed-btn" id="spd-2" onclick="setSpeed(2)">x2</div>
@@ -2167,7 +2277,7 @@
     <div class="speed-btn" id="spd-05" onclick="setSpeed(0.5)">½</div>
   </div>
 
-  <!-- GBA POWER-ON OVERLAY -->
+  <!-- GBA POWER-ON — animación de encendido al pulsar PRESS START -->
   <div id="gba-poweron">
     <div class="gba-poweron-screen" id="gba-screen">
       <div class="gba-screen-fill" id="gba-fill"></div>
@@ -2181,7 +2291,7 @@
     </div>
   </div>
 
-  <!-- SPLASH SCREEN -->
+  <!-- SPLASH SCREEN — intro Pokémon con typewriter + pantalla de título -->
   <div id="splash">
     <div id="sp-flash"></div>
 
@@ -2257,7 +2367,15 @@
     </div>
   </div>
 
-  <!-- TOUCH CONTROLS -->
+
+  <!-- ═══════════════════════════════════════════════
+       TOUCH CONTROLS — gamepad virtual para móvil/PWA.
+       Usa Pointer Events para compatibilidad total.
+       EJS_VirtualGamepad se activa en loadRom() para
+       que el gamepad nativo funcione dentro del iframe.
+       ═══════════════════════════════════════════════ -->
+
+  <!-- CONTROLES TÁCTILES OVERLAY -->
   <div id="touch-controls">
     <div class="tc-left">
       <div class="tc-dpad">
@@ -2295,6 +2413,11 @@
       </div>
     </div>
   </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       HEADER — logo, temas, modo oscuro, marquee
+       ═══════════════════════════════════════════════ -->
 
   <header>
     <div class="header-top">
@@ -2337,6 +2460,11 @@
     </div>
   </header>
 
+
+  <!-- ═══════════════════════════════════════════════
+       HERO — título principal y subtítulo
+       ═══════════════════════════════════════════════ -->
+
   <div class="hero fade-up">
     <div class="title-box">
       <span class="title-sub">✦ EMULADOR WEB RETRO ✦</span>
@@ -2352,9 +2480,19 @@
 
   <div class="grass-divider"></div>
 
+
+  <!-- ═══════════════════════════════════════════════
+       MAIN — contenido principal de la página
+       ═══════════════════════════════════════════════ -->
+
   <main class="main">
 
-    <!-- CONSOLAS -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN 1: SELECTOR DE CONSOLA
+         Grid de botones para elegir sistema.
+         Consolas experimentales (PSP, DS) abren
+         un modal de aviso antes de activarse.
+         ───────────────────────────────────────── -->
     <div class="fade-up d1">
       <div class="section-label">ELIGE TU CONSOLA</div>
       <div class="panel">
@@ -2423,7 +2561,12 @@
       </div>
     </div>
 
-    <!-- PANTALLA GBA -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN 2: PANTALLA DEL EMULADOR
+         Marco GBA SP con pantalla verde, LED,
+         D-pad decorativo y botones A/B/X/Y.
+         El emulador se monta en #game.
+         ───────────────────────────────────────── -->
     <div class="fade-up d2">
       <div class="section-label">PANTALLA</div>
       <div class="gba-frame">
@@ -2470,7 +2613,12 @@
       </div>
     </div>
 
-    <!-- CARGAR ROM -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN 3: CARGADOR DE ROM
+         Input de archivo + botón PLAY.
+         Al cargar: activa el emulador, muestra
+         el panel de saves y la barra de velocidad.
+         ───────────────────────────────────────── -->
     <div class="fade-up d3">
       <div class="section-label">CARGAR ROM</div>
       <div class="rom-panel">
@@ -2489,7 +2637,12 @@
       </div>
     </div>
 
-    <!-- SAVE STATES PANEL -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN 4: PARTIDAS GUARDADAS
+         3 slots por juego usando IndexedDB.
+         Se muestra solo cuando hay juego activo.
+         Los saves persisten al cerrar el navegador.
+         ───────────────────────────────────────── -->
     <div id="save-panel" style="display:none;" class="fade-up">
       <div class="section-label">PARTIDAS GUARDADAS</div>
       <div class="panel save-states-panel">
@@ -2542,7 +2695,10 @@
       </div>
     </div>
 
-    <!-- CONTROLES -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN 5: MAPA DE CONTROLES
+         Tabla de teclas de teclado asignadas.
+         ───────────────────────────────────────── -->
     <div class="fade-up d4">
       <div class="section-label">CONTROLES</div>
       <div class="panel" style="margin-bottom:2rem;">
@@ -2573,7 +2729,13 @@
       </div>
     </div>
 
-    <!-- MULTIJUGADOR ONLINE -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN 6: MULTIJUGADOR ONLINE
+         WebRTC P2P — sin servidor intermediario.
+         Jugador 1 crea sala con código de 6 chars.
+         Jugador 2 introduce el código y se une.
+         Fallback al netplay nativo de EmulatorJS.
+         ───────────────────────────────────────── -->
     <div class="fade-up">
       <div class="section-label">MULTIJUGADOR ONLINE</div>
       <div class="netplay-panel">
@@ -2657,7 +2819,12 @@
       </div>
     </div>
 
-    <!-- EMULADORES DE ESCRITORIO -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN 7: EMULADORES DE ESCRITORIO
+         Consolas no viables en navegador (PS2,
+         GameCube, PS3, Switch, Xbox...).
+         Info legal + enlaces a emuladores oficiales.
+         ───────────────────────────────────────── -->
     <div class="fade-up d5">
       <div class="section-label">EMULADORES DE ESCRITORIO</div>
       <div class="ps2-panel">
@@ -2857,9 +3024,20 @@
       </div>
     </div>
 
-    <!-- JUEGOS DESTACADOS: sección eliminada temporalmente, conservar CSS para uso futuro -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN FUTURE: JUEGOS DESTACADOS
+         Eliminada temporalmente para aligerar la
+         página. El CSS está preservado arriba.
+         Para reactivar: añadir aquí el HTML del
+         grid de carátulas pixel art SVG.
+         ───────────────────────────────────────── -->
 
-    <!-- CONSIGUE TUS ROMS -->
+    <!-- ─────────────────────────────────────────
+         SECCIÓN 8: FUENTES LEGALES DE ROMs
+         3 pestañas: Archive.org / Homebrew libre
+         / Otros sitios. Solo enlaces — RetroPlay
+         no aloja ni distribuye ROMs.
+         ───────────────────────────────────────── -->
     <div class="roms-section fade-up">
       <div class="section-label">CONSIGUE TUS ROMs</div>
       <div class="panel">
@@ -3185,7 +3363,11 @@
       </div>
     </div>
 
-    <!-- AVISO LEGAL -->
+    <!-- ─────────────────────────────────────────
+         AVISO LEGAL
+         Deja claro que RetroPlay no distribuye ROMs
+         y que la responsabilidad es del usuario.
+         ───────────────────────────────────────── -->
     <div class="notice fade-up d5">
       <div class="notice-title">⚠ AVISO LEGAL</div>
       <p>
@@ -3199,6 +3381,11 @@
   </main>
 
   <div class="grass-divider"></div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       FOOTER — logo, lista de consolas, contador LED
+       ═══════════════════════════════════════════════ -->
 
   <footer>
     <span class="footer-logo">★ RETROPLAY WEB EMULATOR v3.0 ★</span>
@@ -3222,7 +3409,12 @@
     </div>
   </footer>
 
-  <!-- GENERIC WARNING MODAL -->
+
+  <!-- ═══════════════════════════════════════════════
+       MODALES DE AVISO — para consolas experimentales
+       ═══════════════════════════════════════════════ -->
+
+  <!-- MODAL GENÉRICO — DS y futuras consolas experimentales -->
   <div class="modal-overlay" id="generic-modal">
     <div class="modal-box">
       <div class="modal-hdr">
@@ -3240,7 +3432,7 @@
     </div>
   </div>
 
-  <!-- PSP WARNING MODAL -->
+  <!-- MODAL PSP — aviso específico de limitaciones PSP -->
   <div class="modal-overlay" id="psp-modal">
     <div class="modal-box">
       <div class="modal-hdr">
@@ -3264,7 +3456,15 @@
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════
+       JAVASCRIPT — toda la lógica de la aplicación.
+       Secciones: splash · temas · touch controls ·
+       velocidad · netplay · PWA · modo oscuro ·
+       consolas · emulador · saves · visitas
+       ═══════════════════════════════════════════════ -->
+
   <script>
+    // Variables globales del estado del emulador
     let currentCore = 'nes';
     let currentConsoleName = 'NES';
     let emulatorLoaded = false;
@@ -3274,6 +3474,11 @@
     let pendingWarningName = null;
     let pendingWarningAccept = null;
 
+    /* ─────────────────────────────────────────
+       JS 1: SPLASH SCREEN
+       Intro tipo Pokémon con typewriter.
+       Se salta si ya se visitó en esta sesión.
+       ───────────────────────────────────────── */
     // ── SPLASH SCREEN — POKÉMON STYLE ──
     (function() {
       if (sessionStorage.getItem('rp-splash-done')) {
@@ -3460,6 +3665,10 @@
         }, 300);
       };
     })();
+    /* ─────────────────────────────────────────
+       JS 13: PESTAÑAS DE FUENTES DE ROMs
+       Archive.org / Homebrew / Otros sitios
+       ───────────────────────────────────────── */
     function switchTab(tab) {
       document.querySelectorAll('.src-tab').forEach((t,i) => {
         const tabs = ['archive','homebrew','sites'];
@@ -3469,6 +3678,13 @@
       document.getElementById('tab-' + tab).classList.add('active');
     }
 
+    /* ─────────────────────────────────────────
+       JS 5: MULTIJUGADOR ONLINE (WebRTC)
+       Conexión P2P directa con STUN de Google.
+       Jugador 1 host → genera código 6 chars.
+       Jugador 2 join → introduce el código.
+       Fallback al netplay nativo de EJS.
+       ───────────────────────────────────────── */
     // ── NETPLAY (WebRTC P2P) ──
     let netplayMode = null;
     let peerConn = null;
@@ -3667,6 +3883,11 @@
       showToast('🔴 Netplay desconectado');
     }
 
+    /* ─────────────────────────────────────────
+       JS 6: PWA — INSTALAR COMO APP
+       Captura beforeinstallprompt y muestra
+       el banner. Service Worker para offline.
+       ───────────────────────────────────────── */
     // ── PWA INSTALL ──
     let deferredPrompt = null;
 
@@ -3714,6 +3935,11 @@
       navigator.serviceWorker.register(swUrl).catch(() => {});
     }
 
+    /* ─────────────────────────────────────────
+       JS 2: TEMAS DE COLOR
+       Pokémon Rojo / Azul / Oro / Verde.
+       Se persiste en localStorage.
+       ───────────────────────────────────────── */
     // ── THEMES ──
     const THEMES = ['red','blue','gold','green'];
     function setTheme(theme) {
@@ -3732,6 +3958,12 @@
       if (!d.classList.contains('theme-dot-' + savedTheme)) d.classList.remove('active');
     });
 
+    /* ─────────────────────────────────────────
+       JS 3: CONTROLES TÁCTILES
+       Usa Pointer Events para compatibilidad
+       con PWA. Fallback a eventos de teclado
+       si EJS no expone simulateInput.
+       ───────────────────────────────────────── */
     // ── TOUCH CONTROLS (Pointer Events — works in PWA) ──
     let touchControlsVisible = false;
     let currentSpeed = 1;
@@ -3799,6 +4031,12 @@
       }
     }
 
+    /* ─────────────────────────────────────────
+       JS 4: VELOCIDAD / TURBO
+       Multiplica la velocidad del emulador.
+       Barra flotante x½/x1/x2/x3 + botón
+       turbo en los controles táctiles.
+       ───────────────────────────────────────── */
     // ── SPEED / TURBO ──
     function setSpeed(speed) {
       currentSpeed = speed;
@@ -3893,6 +4131,11 @@
       localStorage.setItem('rp-touch', '1');
     }
 
+    /* ─────────────────────────────────────────
+       JS 14: CONTADOR DE VISITAS
+       Cuenta una vez por sesión de navegador.
+       Animación de rodillo al mostrar el número.
+       ───────────────────────────────────────── */
     // ── VISIT COUNTER ──
     (function() {
       const KEY = 'rp-visit-count';
@@ -3918,6 +4161,13 @@
       setTimeout(() => requestAnimationFrame(step), 1000);
     })();
 
+    /* ─────────────────────────────────────────
+       JS 7: MODO OSCURO
+       Toggle + persistencia en localStorage.
+       Las variables CSS se definen arriba con
+       especificidad suficiente para ganar a
+       cualquier tema activo.
+       ───────────────────────────────────────── */
     // ── DARK MODE ──
     function toggleDark() {
       document.body.classList.toggle('dark');
@@ -3931,6 +4181,11 @@
       document.querySelector('.toggle-icon').textContent = '☀️';
     }
 
+    /* ─────────────────────────────────────────
+       JS 8: SELECCIÓN DE CONSOLA
+       Actualiza currentCore/currentConsoleName
+       y resetea el emulador si estaba activo.
+       ───────────────────────────────────────── */
     function selectConsole(el, core, name) {
       document.querySelectorAll('.console-btn').forEach(b => b.classList.remove('active'));
       el.classList.add('active');
@@ -4016,6 +4271,11 @@
       if (e.target === this) closePSPModal();
     });
 
+    /* ─────────────────────────────────────────
+       JS 9: RESET DEL EMULADOR
+       Limpia el DOM, oculta panels, resetea
+       velocidad y estado global.
+       ───────────────────────────────────────── */
     function resetEmulator() {
       if (emulatorLoaded) {
         document.getElementById('game').innerHTML = '';
@@ -4039,6 +4299,12 @@
       }
     }
 
+    /* ─────────────────────────────────────────
+       JS 10: PARTIDAS GUARDADAS (IndexedDB)
+       3 slots por juego. La clave incluye
+       el core y el nombre de la ROM para
+       que cada juego tenga sus propios slots.
+       ───────────────────────────────────────── */
     // ── INDEXEDDB SAVE STATES ──
     const DB_NAME = 'RetroPlaySaves';
     const DB_VERSION = 1;
@@ -4120,6 +4386,12 @@
       } catch(e) {}
     }
 
+    /* ─────────────────────────────────────────
+       JS 11: TOAST NOTIFICATIONS
+       Mensaje dorado flotante en la parte
+       inferior. Se crea una sola vez en el DOM
+       y se reutiliza en todas las llamadas.
+       ───────────────────────────────────────── */
     // ── TOAST NOTIFICATION ──
     function showToast(msg) {
       let toast = document.getElementById('rp-toast');
@@ -4141,6 +4413,13 @@
       toast._t = setTimeout(() => { toast.style.opacity = '0'; }, 2500);
     }
 
+    /* ─────────────────────────────────────────
+       JS 12: CARGA DE ROM Y CONFIGURACIÓN EJS
+       Crea la URL de objeto del archivo,
+       configura todas las variables EJS_*
+       y carga el loader de EmulatorJS.
+       EJS_VirtualGamepad se activa en móvil.
+       ───────────────────────────────────────── */
     function loadRom() {
       const fileInput = document.getElementById('rom-file');
       if (!fileInput.files || fileInput.files.length === 0) {
