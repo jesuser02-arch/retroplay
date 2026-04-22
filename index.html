@@ -1672,7 +1672,12 @@
       .controls-grid { grid-template-columns: repeat(2, 1fr); }
       .rom-row { flex-direction: column; align-items: stretch; }
       .load-btn { width: 100%; text-align: center; }
-      .header-pills { display: none; }
+      /* Ocultar pills decorativas pero mantener toggle táctil y modo oscuro */
+      .header-pills .pill { display: none; }
+      .header-pills .theme-switcher { display: none; }
+      /* El toggle táctil y el modo oscuro siempre visibles en móvil */
+      .tc-header-btn { font-size: 6px; padding: 4px 8px; }
+      .dark-toggle { font-size: 6px; padding: 4px 8px; }
     }
     /* ════════════════════════════════════════
        TEMAS DE COLOR
@@ -1990,7 +1995,7 @@
       align-items: center;
       justify-content: center;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.6s ease;
     }
     .splash-phase.show { opacity: 1; }
 
@@ -2011,7 +2016,49 @@
       background: #000;
       padding: 2rem;
       text-align: center;
+      width: 100%;
     }
+
+    /* Animated pixel grass background for oak phase */
+    #sp-oak::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: repeating-linear-gradient(
+        90deg, #2a6028 0px, #2a6028 16px, #346830 16px, #346830 32px
+      );
+      opacity: 0.5;
+      animation: grass-scroll 8s linear infinite;
+    }
+    #sp-oak::after {
+      content: '';
+      position: absolute;
+      bottom: 80px; left: 0; right: 0;
+      height: 4px;
+      background: #1a4018;
+      opacity: 0.6;
+    }
+    @keyframes grass-scroll {
+      from { background-position: 0 0; }
+      to   { background-position: 32px 0; }
+    }
+
+    /* Animated stars in oak bg */
+    .sp-stars {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .sp-star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: sp-twinkle var(--d, 2s) ease-in-out infinite;
+    }
+    @keyframes sp-twinkle { 0%,100%{opacity:.1;} 50%{opacity:.7;} }
+
     .sp-textbox {
       background: #f8f4e8;
       border: 4px solid #1a1410;
@@ -2020,9 +2067,15 @@
       padding: 1.25rem 1.5rem;
       max-width: 480px;
       width: 90vw;
-      min-height: 80px;
+      min-height: 90px;
       position: relative;
       margin-bottom: 1rem;
+      z-index: 2;
+      animation: textbox-in 0.4s ease forwards;
+    }
+    @keyframes textbox-in {
+      from { transform: translateY(10px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
     }
     .sp-text {
       font-family: 'Press Start 2P', monospace;
@@ -2051,27 +2104,50 @@
       display: none;
     }
     .sp-arrow.show { display: block; }
-    @keyframes arr-bounce { from{transform:translateY(0);} to{transform:translateY(4px);} }
+    @keyframes arr-bounce { from{transform:translateY(0);} to{transform:translateY(5px);} }
 
-    /* Pokemon-style sprite area */
+    .sp-tap-hint {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: rgba(248,244,232,0.4);
+      position: absolute;
+      bottom: 90px;
+      z-index: 2;
+      animation: fade-hint 3s ease-in-out infinite;
+    }
+    @keyframes fade-hint { 0%,100%{opacity:0;} 40%,60%{opacity:1;} }
+
+    /* Pokemon-style sprite area — bigger and animated */
     .sp-sprite-area {
-      width: 120px; height: 120px;
-      margin: 0 auto 1rem;
+      width: clamp(140px, 30vw, 180px);
+      height: clamp(140px, 30vw, 180px);
+      margin: 0 auto 1.5rem;
       position: relative;
+      z-index: 2;
     }
     .sp-sprite-inner {
       width: 100%; height: 100%;
-      animation: sprite-enter 0.5s ease forwards;
       opacity: 0;
+      animation: sprite-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+      filter: drop-shadow(0 8px 24px rgba(204,0,0,0.4));
     }
     @keyframes sprite-enter {
-      0%{opacity:0;transform:translateY(20px);}
-      100%{opacity:1;transform:translateY(0);}
+      0%  { opacity:0; transform: translateY(30px) scale(0.7); }
+      60% { opacity:1; transform: translateY(-8px) scale(1.05); }
+      100%{ opacity:1; transform: translateY(0) scale(1); }
+    }
+    /* Pokéball idle animation after entering */
+    .sp-sprite-inner.idle {
+      animation: ball-idle 2s ease-in-out infinite;
+    }
+    @keyframes ball-idle {
+      0%,100%{ transform: translateY(0) rotate(-3deg); filter: drop-shadow(0 8px 24px rgba(204,0,0,0.4)); }
+      50%    { transform: translateY(-10px) rotate(3deg); filter: drop-shadow(0 16px 32px rgba(204,0,0,0.6)); }
     }
 
     /* Phase 2 — Title screen */
     #sp-title {
-      background: #1a3a8a;
+      background: linear-gradient(160deg, #0a1a5a 0%, #1a3a8a 50%, #0a2060 100%);
       width: 100%; height: 100%;
       display: flex;
       flex-direction: column;
@@ -2084,20 +2160,39 @@
       position: absolute;
       inset: 0;
       background:
-        repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 40px),
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 40px);
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 40px);
+      animation: grid-drift 20s linear infinite;
     }
+    @keyframes grid-drift {
+      from { background-position: 0 0; }
+      to   { background-position: 40px 40px; }
+    }
+    /* Radial glow behind the logo */
+    .sp-title-glow {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(244,197,66,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: glow-pulse 3s ease-in-out infinite;
+    }
+    @keyframes glow-pulse { 0%,100%{opacity:.6;} 50%{opacity:1;} }
+
     .sp-grass-top {
       position: absolute;
       top: 0; left: 0; right: 0; height: 20px;
       background: repeating-linear-gradient(90deg,#4aa840 0,#4aa840 20px,#5aba50 20px,#5aba50 40px);
       border-bottom: 4px solid #2a7a28;
+      animation: grass-scroll 6s linear infinite;
     }
     .sp-grass-bot {
       position: absolute;
       bottom: 0; left: 0; right: 0; height: 20px;
       background: repeating-linear-gradient(90deg,#4aa840 0,#4aa840 20px,#5aba50 20px,#5aba50 40px);
       border-top: 4px solid #2a7a28;
+      animation: grass-scroll 6s linear infinite reverse;
     }
     .sp-version-tag {
       position: absolute;
@@ -2111,11 +2206,13 @@
       padding: 4px 10px;
       box-shadow: 2px 2px 0 #1a1410;
       letter-spacing: 1px;
+      animation: badge-in 0.5s 0.3s ease both;
     }
+    @keyframes badge-in { from{opacity:0;transform:translateX(20px);} to{opacity:1;transform:translateX(0);} }
 
     .sp-logo-wrap {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       position: relative;
       z-index: 2;
     }
@@ -2126,15 +2223,16 @@
       letter-spacing: 4px;
       display: block;
       margin-bottom: 10px;
-      animation: title-fade-in 0.5s ease forwards;
+      animation: sub-in 0.6s 0.1s ease both;
     }
+    @keyframes sub-in { from{opacity:0;letter-spacing:10px;} to{opacity:1;letter-spacing:4px;} }
     .sp-logo-main {
       font-family: 'Press Start 2P', monospace;
       font-size: clamp(28px,6vw,52px);
       color: #f4c542;
       text-shadow: 4px 4px 0 #c9972a, 8px 8px 0 rgba(0,0,0,0.3);
       display: block;
-      animation: logo-drop 0.6s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+      animation: logo-drop 0.7s cubic-bezier(0.175,0.885,0.32,1.275) both;
       letter-spacing: 2px;
     }
     .sp-logo-main span { color: #fff; }
@@ -2295,8 +2393,10 @@
   <div id="splash">
     <div id="sp-flash"></div>
 
-    <!-- PHASE 1: Pokémon Oak-style intro -->
+    <!-- FASE 1: intro Pokémon Oak con typewriter -->
     <div class="splash-phase show" id="sp-oak">
+      <!-- Estrellas animadas de fondo -->
+      <div class="sp-stars" id="sp-stars"></div>
       <div class="sp-sprite-area">
         <div class="sp-sprite-inner" id="sp-sprite">
           <!-- Pixel art pokeball -->
@@ -2316,11 +2416,13 @@
         <span class="sp-cursor" id="sp-cursor" style="display:none;"></span>
         <div class="sp-arrow" id="sp-arrow">▼</div>
       </div>
+      <div class="sp-tap-hint">TOCA PARA CONTINUAR</div>
     </div>
 
-    <!-- PHASE 2: Title screen -->
+    <!-- FASE 2: pantalla de título -->
     <div class="splash-phase" id="sp-title">
       <div class="sp-title-bg"></div>
+      <div class="sp-title-glow"></div>
       <div class="sp-grass-top"></div>
       <div class="sp-grass-bot"></div>
       <div class="sp-version-tag">v3.0</div>
@@ -3507,10 +3609,21 @@
       const spriteEl = document.getElementById('sp-sprite');
       const oakEl    = document.getElementById('sp-oak');
 
-      // Show sprite
+      // Generar estrellas de fondo
+      const starsEl = document.getElementById('sp-stars');
+      for (let i = 0; i < 40; i++) {
+        const s = document.createElement('div');
+        s.className = 'sp-star';
+        const size = Math.random() * 2.5 + 1;
+        s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*90}%;left:${Math.random()*100}%;--d:${(Math.random()*2+1.5).toFixed(1)}s;animation-delay:${(Math.random()*2).toFixed(1)}s;`;
+        starsEl.appendChild(s);
+      }
+
+      // Show sprite with delay then switch to idle animation
       setTimeout(() => {
         spriteEl.style.opacity = '1';
-        spriteEl.style.animation = 'sprite-enter 0.5s ease forwards';
+        spriteEl.style.animation = 'sprite-enter 0.6s cubic-bezier(0.175,0.885,0.32,1.275) forwards';
+        setTimeout(() => spriteEl.classList.add('idle'), 800);
       }, 300);
 
       function typeMessage(text, onDone) {
